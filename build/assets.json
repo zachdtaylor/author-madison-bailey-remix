@@ -1,5 +1,5 @@
 {
-  "version": "9b097f7d",
+  "version": "b37c8136",
   "entry": {
     "module": "/build/entry.client-EG24NOEE.js",
     "imports": [
@@ -11,7 +11,7 @@
     "root": {
       "id": "root",
       "path": "/",
-      "module": "/build/root-XZGED4IQ.js",
+      "module": "/build/root-ZFXFOI7P.js",
       "hasAction": false,
       "hasLoader": true
     },
@@ -29,10 +29,10 @@
       "parentId": "root",
       "path": "/",
       "caseSensitive": false,
-      "module": "/build/routes/index-IHCK5Q4R.js",
+      "module": "/build/routes/index-ZVJNVGO2.js",
       "hasAction": false,
       "hasLoader": true
     }
   },
-  "url": "/build/manifest-9B097F7D.js"
+  "url": "/build/manifest-B37C8136.js"
 }

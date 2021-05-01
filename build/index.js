@@ -92,6 +92,9 @@ function Document({children}) {
     lang: "en"
   }, /* @__PURE__ */ React.createElement("head", null, /* @__PURE__ */ React.createElement("meta", {
     charSet: "utf-8"
+  }), /* @__PURE__ */ React.createElement("meta", {
+    name: "viewport",
+    content: "width=device-width, initial-scale=1"
   }), /* @__PURE__ */ React.createElement("link", {
     rel: "icon",
     href: "/favicon.png",
@@ -132,14 +135,9 @@ var import_remix3 = __toModule(require("remix"));
 // app/components/lib.tsx
 var import_react = __toModule(require("react"));
 var import_react_router_dom2 = __toModule(require("react-router-dom"));
-function usePathname() {
-  if (typeof window === "undefined") {
-    return "";
-  }
-  return window.location.pathname;
-}
+var import_rich_text_types = __toModule(require("@contentful/rich-text-types"));
+var import_rich_text_react_renderer = __toModule(require("@contentful/rich-text-react-renderer"));
 function NavBarItem({to, children}) {
-  const pathname = usePathname();
   return /* @__PURE__ */ import_react.default.createElement(import_react_router_dom2.NavLink, {
     to,
     className: "w-full text-xl",
@@ -158,7 +156,10 @@ function Header() {
     className: "flex-row md:flex md:justify-between md:border-b-2"
   }, /* @__PURE__ */ import_react.default.createElement("div", {
     className: "flex flex-row justify-beclassNameeen px-2 py-1 pr-4 shadow-md md:shadow-none"
-  }, /* @__PURE__ */ import_react.default.createElement("div", {
+  }, /* @__PURE__ */ import_react.default.createElement("img", {
+    src: "/madison-bailey-logo.png",
+    className: "w-16"
+  }), /* @__PURE__ */ import_react.default.createElement("div", {
     id: "hamburgerbtn",
     className: "w-10 relative md:hidden",
     role: "button",
@@ -189,10 +190,33 @@ function Layout({children, noHeader}) {
     }
   }, !noHeader && /* @__PURE__ */ import_react.default.createElement(Header, null), /* @__PURE__ */ import_react.default.createElement("main", null, children));
 }
+function Paragraph({children}) {
+  return /* @__PURE__ */ import_react.default.createElement("p", {
+    className: "text-gray-900 text-lg leading-relaxed py-2"
+  }, children);
+}
+var options = {
+  renderMark: {
+    [import_rich_text_types.MARKS.BOLD]: () => /* @__PURE__ */ import_react.default.createElement("span", {
+      style: {fontFamily: "TimelessBold"}
+    })
+  },
+  renderNode: {
+    [import_rich_text_types.BLOCKS.PARAGRAPH]: (node, children) => /* @__PURE__ */ import_react.default.createElement(Paragraph, null, children)
+  }
+};
+function RichText({richTextResponse, maxElements}) {
+  const components = (0, import_rich_text_react_renderer.documentToReactComponents)(richTextResponse.json, options);
+  if (typeof maxElements === "number") {
+    return /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, components.slice(0, maxElements));
+  }
+  return /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, components);
+}
+var lib_default = RichText;
 
 // app/components/button.tsx
 var import_react_router_dom3 = __toModule(require("react-router-dom"));
-function Link2({to, children, extraMargin}) {
+function Link({to, children, extraMargin}) {
   return /* @__PURE__ */ React.createElement(import_react_router_dom3.Link, {
     to,
     className: `inline-block bg-primary-dark hover:bg-primary ease-in-out transition duration-200 text-white py-3 px-4 rounded shadow-md
@@ -200,17 +224,53 @@ function Link2({to, children, extraMargin}) {
   }, children);
 }
 
+// app/graphql/queries.ts
+var latestBookRelease = `
+  query {
+    books: bookCollection(limit: 1, order: publicationDate_DESC) {
+      items {
+        sys {
+          id
+        }
+        title
+        description {
+          json
+        }
+        coverArt {
+          title
+          url
+        }
+      }
+    }
+  }
+`;
+
+// app/utils/contentful-client.ts
+function contentfulClient(query, variables) {
+  return fetch("https://graphql.contentful.com/content/v1/spaces/6exbx0zy4oap", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer u2_zse6aykxBOlBCiTpTBsqGAnc2rOb9N0UTk-33Xyg"
+    },
+    body: JSON.stringify({
+      query,
+      variables
+    })
+  }).then((res) => res.json());
+}
+
 // app/styles/index.css
 var styles_default = "/build/_assets/index-JEUFNT4K.css";
 
 // app/styles/app.css
-var app_default = "/build/_assets/app-ZS4OQHIC.css";
+var app_default = "/build/_assets/app-SKIFVIF3.css";
 
 // route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/routes/index.tsx
 var meta2 = () => {
   return {
-    title: "Remix Starter",
-    description: "Welcome to remix!"
+    title: "Home | Author Madison Bailey",
+    description: "Clean Romances for the Hopeful Romantic"
   };
 };
 var links2 = () => {
@@ -220,13 +280,21 @@ var links2 = () => {
   ];
 };
 var loader2 = async () => {
-  return {message: "this is awesome \u{1F60E}"};
+  const res = await contentfulClient(latestBookRelease);
+  return res.data.books.items[0];
 };
 function Index() {
-  let data = (0, import_remix3.useRouteData)();
-  return /* @__PURE__ */ React.createElement(Layout, null, /* @__PURE__ */ React.createElement("div", {
+  return /* @__PURE__ */ React.createElement(Layout, {
+    noHeader: true
+  }, /* @__PURE__ */ React.createElement("img", {
+    src: "/madison-bailey-logo-rectangle.png",
+    className: "mx-auto my-4 md:w-48"
+  }), /* @__PURE__ */ React.createElement(HomeBanner, null), /* @__PURE__ */ React.createElement(NewestRelease, null));
+}
+function HomeBanner() {
+  return /* @__PURE__ */ React.createElement("div", {
     id: "home-banner",
-    className: "w-full bg-cover h-0 relative mt-4"
+    className: "w-full bg-cover h-0 relative"
   }, /* @__PURE__ */ React.createElement("div", {
     className: "absolute inset-0 py-4 px-6 md:p-8"
   }, /* @__PURE__ */ React.createElement("div", {
@@ -234,19 +302,45 @@ function Index() {
   }, /* @__PURE__ */ React.createElement("h1", {
     className: "hidden md:text-7xl md:leading-tight md:mb-6 md:block"
   }, "Madison", /* @__PURE__ */ React.createElement("br", null), "Bailey"), /* @__PURE__ */ React.createElement("h2", {
-    className: "text-2xl xs:text-4xl md:text-3xl font-bold text-gray-800"
+    className: "text-2xl leading-loose xs:text-4xl md:text-3xl font-bold text-gray-800"
   }, "Clean Romances for the", /* @__PURE__ */ React.createElement("span", {
     className: "text-primary-dark"
   }, " Hopeful Romantic")), /* @__PURE__ */ React.createElement("div", {
     className: "mt-5"
-  }, /* @__PURE__ */ React.createElement(Link2, {
+  }, /* @__PURE__ */ React.createElement(Link, {
     to: "/books"
-  }, "Check out my books"))))), /* @__PURE__ */ React.createElement("div", {
-    style: {textAlign: "center", padding: 20}
-  }, /* @__PURE__ */ React.createElement("h2", null, "Welcome to Remix!"), /* @__PURE__ */ React.createElement("p", null, /* @__PURE__ */ React.createElement("a", {
-    href: "https://remix.run/dashboard/docs"
-  }, "Check out the docs"), " to get started."), /* @__PURE__ */ React.createElement("p", null, "Message from the loader: ", data.message)));
+  }, "Check out my books")))));
 }
+var NewestRelease = () => {
+  const data = (0, import_remix3.useRouteData)();
+  return /* @__PURE__ */ React.createElement("div", {
+    className: "px-6 py-2"
+  }, /* @__PURE__ */ React.createElement("div", {
+    className: "pt-8 pb-5"
+  }, /* @__PURE__ */ React.createElement("hr", null)), /* @__PURE__ */ React.createElement("div", {
+    className: "md:mx-8 lg:mx-32"
+  }, /* @__PURE__ */ React.createElement("h2", {
+    className: "text-3xl pb-3 pr-12"
+  }, "Read My Newest Release"), /* @__PURE__ */ React.createElement("div", {
+    className: "border-gray-700 rounded-md shadow-md overflow-hidden md:grid md:grid-cols-3 md:gap-4 md:rounded-none md:shadow-none"
+  }, /* @__PURE__ */ React.createElement("img", {
+    src: data.coverArt.url,
+    alt: data.coverArt.title,
+    className: "h-auto"
+  }), /* @__PURE__ */ React.createElement("div", {
+    className: "p-4 pb-0 md:pt-0 md:col-span-2"
+  }, /* @__PURE__ */ React.createElement("h1", {
+    className: "text-2xl font-bold"
+  }, data.title), /* @__PURE__ */ React.createElement(lib_default, {
+    richTextResponse: data.description,
+    maxElements: 2
+  }), /* @__PURE__ */ React.createElement("div", {
+    className: "text-right md:text-left"
+  }, /* @__PURE__ */ React.createElement(Link, {
+    to: "/books",
+    extraMargin: true
+  }, "Read More"))))));
+};
 
 // <stdin>
 var import_assets = __toModule(require("./assets.json"));

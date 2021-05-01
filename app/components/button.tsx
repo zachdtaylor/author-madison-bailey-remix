@@ -3,7 +3,7 @@ import { Link as RouterLink } from "react-router-dom";
 interface ButtonLinkProps {
   to: string;
   children: React.ReactNode;
-  extraMargin?: string;
+  extraMargin?: boolean;
 }
 
 export function Link({ to, children, extraMargin }: ButtonLinkProps) {

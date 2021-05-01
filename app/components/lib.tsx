@@ -1,12 +1,7 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
-
-function usePathname() {
-  if (typeof window === "undefined") {
-    return "";
-  }
-  return window.location.pathname;
-}
+import { NavLink } from "react-router-dom";
+import { BLOCKS, MARKS } from "@contentful/rich-text-types";
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 
 interface NavBarItemProps {
   to: string;
@@ -14,7 +9,6 @@ interface NavBarItemProps {
 }
 
 function NavBarItem({ to, children }: NavBarItemProps) {
-  const pathname = usePathname();
   return (
     <NavLink
       to={to}
@@ -37,6 +31,7 @@ function Header() {
         className="flex-row md:flex md:justify-between md:border-b-2"
       >
         <div className="flex flex-row justify-beclassNameeen px-2 py-1 pr-4 shadow-md md:shadow-none">
+          <img src="/madison-bailey-logo.png" className="w-16" />
           <div
             id="hamburgerbtn"
             className="w-10 relative md:hidden"
@@ -83,3 +78,42 @@ export function Layout({ children, noHeader }: LayoutProps) {
     </div>
   );
 }
+
+interface ParagraphProps {
+  children: React.ReactNode;
+}
+
+function Paragraph({ children }: ParagraphProps) {
+  return (
+    <p className="text-gray-900 text-lg leading-relaxed py-2">{children}</p>
+  );
+}
+
+const options = {
+  renderMark: {
+    [MARKS.BOLD]: () => <span style={{ fontFamily: "TimelessBold" }}></span>,
+  },
+  renderNode: {
+    [BLOCKS.PARAGRAPH]: (node: any, children: React.ReactNode) => (
+      <Paragraph>{children}</Paragraph>
+    ),
+  },
+};
+
+interface RichTextProps {
+  richTextResponse: { json: any };
+  maxElements?: number;
+}
+
+function RichText({ richTextResponse, maxElements }: RichTextProps) {
+  const components = documentToReactComponents(
+    richTextResponse.json,
+    options
+  ) as Array<React.ReactElement>;
+  if (typeof maxElements === "number") {
+    return <>{components.slice(0, maxElements)}</>;
+  }
+  return <>{components}</>;
+}
+
+export default RichText;
