@@ -5,15 +5,17 @@ import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
 
 interface NavBarItemProps {
   to: string;
+  exact?: boolean;
   children: React.ReactNode;
 }
 
-function NavBarItem({ to, children }: NavBarItemProps) {
+function NavBarItem({ to, exact, children }: NavBarItemProps) {
   return (
     <NavLink
       to={to}
       className="w-full text-xl"
       activeClassName="text-primary-dark"
+      end={exact}
     >
       <li className="py-4 border-b-2 md:mx-4 md:py-2 md:border-b-0 hover:text-primary-dark transition duration-200 ease-in-out">
         {children}
@@ -48,10 +50,12 @@ function Header() {
             mobileMenuActive ? "block" : ""
           }`}
         >
-          <NavBarItem to="/">Home</NavBarItem>
-          <NavBarItem to="/books">Books</NavBarItem>
-          <NavBarItem to="/contact">Contact</NavBarItem>
-          <NavBarItem to="/blog">Blog</NavBarItem>
+          <NavBarItem to="/" exact>
+            Home
+          </NavBarItem>
+          <NavBarItem to="/site/books">Books</NavBarItem>
+          <NavBarItem to="/site/contact">Contact</NavBarItem>
+          <NavBarItem to="/site/blog">Blog</NavBarItem>
         </ul>
       </nav>
     </header>

@@ -1,9 +1,10 @@
 {
-  "version": "b37c8136",
+  "version": "8529bdaa",
   "entry": {
-    "module": "/build/entry.client-EG24NOEE.js",
+    "module": "/build/entry.client-53MC56UI.js",
     "imports": [
-      "/build/_shared/chunk-7IBBT256.js",
+      "/build/_shared/chunk-J376QF6U.js",
+      "/build/_shared/chunk-7LDQFWLN.js",
       "/build/_shared/chunk-DOM5QJLA.js"
     ]
   },
@@ -11,7 +12,7 @@
     "root": {
       "id": "root",
       "path": "/",
-      "module": "/build/root-ZFXFOI7P.js",
+      "module": "/build/root-P2RLMHS3.js",
       "hasAction": false,
       "hasLoader": true
     },
@@ -29,10 +30,48 @@
       "parentId": "root",
       "path": "/",
       "caseSensitive": false,
-      "module": "/build/routes/index-ZVJNVGO2.js",
+      "module": "/build/routes/index-QB5V37EB.js",
+      "imports": [
+        "/build/_shared/chunk-743MYCOQ.js",
+        "/build/_shared/chunk-CCPAQVSL.js"
+      ],
+      "hasAction": false,
+      "hasLoader": true
+    },
+    "routes/site": {
+      "id": "routes/site",
+      "parentId": "root",
+      "path": "site",
+      "caseSensitive": false,
+      "module": "/build/routes/site-6XEHDNPN.js",
+      "imports": [
+        "/build/_shared/chunk-743MYCOQ.js",
+        "/build/_shared/chunk-CCPAQVSL.js"
+      ],
+      "hasAction": false,
+      "hasLoader": false
+    },
+    "routes/site/books": {
+      "id": "routes/site/books",
+      "parentId": "routes/site",
+      "path": "books",
+      "caseSensitive": false,
+      "module": "/build/routes/site/books-CPKVEVUN.js",
+      "hasAction": false,
+      "hasLoader": true
+    },
+    "routes/site/books/$id": {
+      "id": "routes/site/books/$id",
+      "parentId": "routes/site/books",
+      "path": ":id",
+      "caseSensitive": false,
+      "module": "/build/routes/site/books/$id-WQSRLX4A.js",
+      "imports": [
+        "/build/_shared/chunk-CCPAQVSL.js"
+      ],
       "hasAction": false,
       "hasLoader": true
     }
   },
-  "url": "/build/manifest-B37C8136.js"
+  "url": "/build/manifest-8529BDAA.js"
 }

@@ -78,7 +78,7 @@ var import_remix2 = __toModule(require("remix"));
 var import_react_router_dom = __toModule(require("react-router-dom"));
 
 // app/styles/global.css
-var global_default = "/build/_assets/global-WTN5GD5X.css";
+var global_default = "/build/_assets/global-S4B5HPEC.css";
 
 // route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/root.tsx
 var links = () => {
@@ -137,11 +137,12 @@ var import_react = __toModule(require("react"));
 var import_react_router_dom2 = __toModule(require("react-router-dom"));
 var import_rich_text_types = __toModule(require("@contentful/rich-text-types"));
 var import_rich_text_react_renderer = __toModule(require("@contentful/rich-text-react-renderer"));
-function NavBarItem({to, children}) {
+function NavBarItem({to, exact, children}) {
   return /* @__PURE__ */ import_react.default.createElement(import_react_router_dom2.NavLink, {
     to,
     className: "w-full text-xl",
-    activeClassName: "text-primary-dark"
+    activeClassName: "text-primary-dark",
+    end: exact
   }, /* @__PURE__ */ import_react.default.createElement("li", {
     className: "py-4 border-b-2 md:mx-4 md:py-2 md:border-b-0 hover:text-primary-dark transition duration-200 ease-in-out"
   }, children));
@@ -171,13 +172,14 @@ function Header() {
   }))), /* @__PURE__ */ import_react.default.createElement("ul", {
     className: `hidden my-3 mx-5 md:flex md:flex-row ${mobileMenuActive ? "block" : ""}`
   }, /* @__PURE__ */ import_react.default.createElement(NavBarItem, {
-    to: "/"
+    to: "/",
+    exact: true
   }, "Home"), /* @__PURE__ */ import_react.default.createElement(NavBarItem, {
-    to: "/books"
+    to: "/site/books"
   }, "Books"), /* @__PURE__ */ import_react.default.createElement(NavBarItem, {
-    to: "/contact"
+    to: "/site/contact"
   }, "Contact"), /* @__PURE__ */ import_react.default.createElement(NavBarItem, {
-    to: "/blog"
+    to: "/site/blog"
   }, "Blog"))));
 }
 function Layout({children, noHeader}) {
@@ -225,24 +227,48 @@ function Link({to, children, extraMargin}) {
 }
 
 // app/graphql/queries.ts
+var bookFragment = `
+  fragment BookData on Book {
+    sys {
+      id
+    }
+    title
+    description {
+      json
+    }
+    coverArt {
+      title
+      url
+    }
+  }
+`;
 var latestBookRelease = `
   query {
     books: bookCollection(limit: 1, order: publicationDate_DESC) {
       items {
-        sys {
-          id
-        }
-        title
-        description {
-          json
-        }
-        coverArt {
-          title
-          url
-        }
+        ...BookData
       }
     }
   }
+  ${bookFragment}
+`;
+var allBooks = `
+  query {
+    books: bookCollection(order: publicationDate_DESC) {
+      items {
+        ...BookData
+      }
+    }
+  }
+  ${bookFragment}
+`;
+var book = `
+  query($id: String!) {
+    book(id: $id) {
+      ...BookData
+    }
+  }
+  ${bookFragment}
 `;
 
 // app/utils/contentful-client.ts
@@ -308,7 +334,7 @@ function HomeBanner() {
   }, " Hopeful Romantic")), /* @__PURE__ */ React.createElement("div", {
     className: "mt-5"
   }, /* @__PURE__ */ React.createElement(Link, {
-    to: "/books"
+    to: "/site/books"
   }, "Check out my books")))));
 }
 var NewestRelease = () => {
@@ -342,6 +368,166 @@ var NewestRelease = () => {
   }, "Read More"))))));
 };
 
+// route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/routes/site.tsx
+var site_exports = {};
+__export(site_exports, {
+  default: () => Site,
+  links: () => links3
+});
+var import_react_router = __toModule(require("react-router"));
+var links3 = () => {
+  return [{rel: "stylesheet", href: app_default}];
+};
+function Site() {
+  return /* @__PURE__ */ React.createElement(Layout, null, /* @__PURE__ */ React.createElement(import_react_router.Outlet, null));
+}
+
+// route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/routes/site/books.tsx
+var books_exports = {};
+__export(books_exports, {
+  default: () => Books,
+  links: () => links4,
+  loader: () => loader3,
+  meta: () => meta3
+});
+var import_react2 = __toModule(require("react"));
+var import_remix4 = __toModule(require("remix"));
+var import_react_router_dom4 = __toModule(require("react-router-dom"));
+var import_react_clamp_lines = __toModule(require("react-clamp-lines"));
+
+// app/styles/site/books.css
+var books_default = "/build/_assets/books-WX6Q3HNR.css";
+
+// route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/routes/site/books.tsx
+var meta3 = () => {
+  return {
+    title: "Books | Author Madison Bailey",
+    description: "Check out Madison Bailey's books!"
+  };
+};
+var links4 = () => {
+  return [{rel: "stylesheet", href: books_default}];
+};
+var loader3 = async () => {
+  const res = await contentfulClient(allBooks);
+  return res.data.books.items;
+};
+function Books() {
+  const books = (0, import_remix4.useRouteData)();
+  return /* @__PURE__ */ import_react2.default.createElement("div", {
+    className: "m-5 lg:mx-32"
+  }, /* @__PURE__ */ import_react2.default.createElement("div", {
+    className: "grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
+  }, books.map((book2) => /* @__PURE__ */ import_react2.default.createElement(BookPreviewCard, {
+    key: book2.sys.id,
+    book: book2
+  }))), /* @__PURE__ */ import_react2.default.createElement(import_react_router_dom4.Outlet, null));
+}
+function getLines(size) {
+  if (size >= 1250) {
+    return 5;
+  } else if (size >= 640) {
+    return 4;
+  } else if (size >= 450) {
+    return 8;
+  } else if (size >= 425) {
+    return 6;
+  } else if (size >= 375) {
+    return 5;
+  } else if (size >= 320) {
+    return 4;
+  } else {
+    return 3;
+  }
+}
+var BookPreviewCard = ({book: book2}) => {
+  const [previewLines, setPreviewLines] = import_react2.default.useState(typeof window !== "undefined" ? getLines(window.innerWidth) : 4);
+  import_react2.default.useEffect(() => {
+    const handleResize = () => {
+      setPreviewLines(getLines(window.innerWidth));
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  });
+  return /* @__PURE__ */ import_react2.default.createElement(import_react_router_dom4.Link, {
+    to: book2.sys.id,
+    className: "book-preview-link"
+  }, /* @__PURE__ */ import_react2.default.createElement("div", {
+    className: "grid grid-cols-3 grid-flow-col gap-3 "
+  }, /* @__PURE__ */ import_react2.default.createElement("div", {
+    className: "row-span-5"
+  }, /* @__PURE__ */ import_react2.default.createElement("img", {
+    src: book2.coverArt.url,
+    alt: book2.coverArt.title
+  })), /* @__PURE__ */ import_react2.default.createElement("div", {
+    className: "col-span-2 row-span-4 pr-2"
+  }, /* @__PURE__ */ import_react2.default.createElement("h1", {
+    className: "text-2xl"
+  }, book2.title), /* @__PURE__ */ import_react2.default.createElement(import_react_clamp_lines.default, {
+    id: book2.sys.id,
+    className: "text-sm",
+    text: book2.description.json.content[0].content[0].value,
+    lines: previewLines,
+    ellipsis: "...",
+    innerElement: "p",
+    buttons: false
+  }))));
+};
+
+// route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/routes/site/books/$id.tsx
+var id_exports = {};
+__export(id_exports, {
+  default: () => Book,
+  loader: () => loader4
+});
+var import_remix5 = __toModule(require("remix"));
+var loader4 = async ({params}) => {
+  const res = await contentfulClient(book, {id: params.id});
+  return res.data.book;
+};
+function Book() {
+  const book2 = (0, import_remix5.useRouteData)();
+  return /* @__PURE__ */ React.createElement("div", {
+    className: "absolute z-10 top-0 left-0 w-full h-full bg-gray-600 bg-opacity-50 md:p-5"
+  }, /* @__PURE__ */ React.createElement("div", {
+    className: "m-auto w-10/12 h-10/12 bg-white p-3 rounded-md mt-5"
+  }, /* @__PURE__ */ React.createElement("div", {
+    className: "float-right"
+  }, /* @__PURE__ */ React.createElement(CloseButton, null)), /* @__PURE__ */ React.createElement("div", {
+    className: "m-5 sm:grid sm:grid-cols-2 sm:gap-4 md:grid-cols-3"
+  }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", {
+    className: "border-gray-700 rounded-md shadow-lg overflow-hidden"
+  }, /* @__PURE__ */ React.createElement("img", {
+    src: book2.coverArt.url,
+    alt: book2.coverArt.title
+  }))), /* @__PURE__ */ React.createElement("div", {
+    className: "p-3 pt-5 sm:pt-0 md:col-span-2"
+  }, /* @__PURE__ */ React.createElement("h1", {
+    className: "text-2xl font-bold"
+  }, book2.title), /* @__PURE__ */ React.createElement(lib_default, {
+    richTextResponse: book2.description
+  }), /* @__PURE__ */ React.createElement("hr", {
+    className: "my-5"
+  })))));
+}
+function CloseButton() {
+  return /* @__PURE__ */ React.createElement(import_remix5.Link, {
+    to: "/site/books"
+  }, /* @__PURE__ */ React.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    className: "h-6 w-6",
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor"
+  }, /* @__PURE__ */ React.createElement("path", {
+    "stroke-linecap": "round",
+    "stroke-linejoin": "round",
+    "stroke-width": "2",
+    d: "M6 18L18 6M6 6l12 12"
+  })));
+}
+
 // <stdin>
 var import_assets = __toModule(require("./assets.json"));
 var entry = {module: entry_server_exports};
@@ -366,6 +552,27 @@ var routes = {
     path: "/",
     caseSensitive: false,
     module: routes_exports
+  },
+  "routes/site": {
+    id: "routes/site",
+    parentId: "root",
+    path: "site",
+    caseSensitive: false,
+    module: site_exports
+  },
+  "routes/site/books": {
+    id: "routes/site/books",
+    parentId: "routes/site",
+    path: "books",
+    caseSensitive: false,
+    module: books_exports
+  },
+  "routes/site/books/$id": {
+    id: "routes/site/books/$id",
+    parentId: "routes/site/books",
+    path: ":id",
+    caseSensitive: false,
+    module: id_exports
   }
 };
 // Annotate the CommonJS export names for ESM import in node:

@@ -16,6 +16,7 @@
 
 body {
   font-family: Timeless !important;
+  height: 100%;
   --tw-bg-opacity: 1;
   background-color: rgba(243, 244, 246, var(--tw-bg-opacity));
   --tw-text-opacity: 1;
