@@ -1,0 +1,29 @@
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+@font-face {
+  font-family: "Timeless";
+
+  src: url("/Timeless.ttf");
+}
+
+@font-face {
+  font-family: "TimelessBold";
+
+  src: url("/Timeless-Bold.ttf");
+}
+
+body {
+  font-family: Timeless;
+  --tw-bg-opacity: 1;
+  background-color: rgba(243, 244, 246, var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgba(17, 24, 39, var(--tw-text-opacity));
+}
+
+footer {
+  text-align: center;
+  color: #ccc;
+  padding-top: 80px;
+}
