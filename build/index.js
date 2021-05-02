@@ -125,18 +125,23 @@ function FourOhFour() {
 // route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/routes/index.tsx
 var routes_exports = {};
 __export(routes_exports, {
-  default: () => Index,
-  links: () => links2,
-  loader: () => loader2,
-  meta: () => meta2
+  Layout: () => Layout,
+  default: () => Site,
+  links: () => links2
 });
-var import_remix3 = __toModule(require("remix"));
-
-// app/components/lib.tsx
 var import_react = __toModule(require("react"));
 var import_react_router_dom2 = __toModule(require("react-router-dom"));
-var import_rich_text_types = __toModule(require("@contentful/rich-text-types"));
-var import_rich_text_react_renderer = __toModule(require("@contentful/rich-text-react-renderer"));
+
+// app/styles/app.css
+var app_default = "/build/_assets/app-SKIFVIF3.css";
+
+// route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/routes/index.tsx
+var links2 = () => {
+  return [{rel: "stylesheet", href: app_default}];
+};
+function Site() {
+  return /* @__PURE__ */ import_react.default.createElement(Layout, null, /* @__PURE__ */ import_react.default.createElement(import_react_router_dom2.Outlet, null));
+}
 function NavBarItem({to, exact, children}) {
   return /* @__PURE__ */ import_react.default.createElement(import_react_router_dom2.NavLink, {
     to,
@@ -175,11 +180,11 @@ function Header() {
     to: "/",
     exact: true
   }, "Home"), /* @__PURE__ */ import_react.default.createElement(NavBarItem, {
-    to: "/site/books"
+    to: "/books"
   }, "Books"), /* @__PURE__ */ import_react.default.createElement(NavBarItem, {
-    to: "/site/contact"
+    to: "/contact"
   }, "Contact"), /* @__PURE__ */ import_react.default.createElement(NavBarItem, {
-    to: "/site/blog"
+    to: "/blog"
   }, "Blog"))));
 }
 function Layout({children, noHeader}) {
@@ -192,38 +197,36 @@ function Layout({children, noHeader}) {
     }
   }, !noHeader && /* @__PURE__ */ import_react.default.createElement(Header, null), /* @__PURE__ */ import_react.default.createElement("main", null, children));
 }
-function Paragraph({children}) {
-  return /* @__PURE__ */ import_react.default.createElement("p", {
-    className: "text-gray-900 text-lg leading-relaxed py-2"
-  }, children);
-}
-var options = {
-  renderMark: {
-    [import_rich_text_types.MARKS.BOLD]: () => /* @__PURE__ */ import_react.default.createElement("span", {
-      style: {fontFamily: "TimelessBold"}
-    })
-  },
-  renderNode: {
-    [import_rich_text_types.BLOCKS.PARAGRAPH]: (node, children) => /* @__PURE__ */ import_react.default.createElement(Paragraph, null, children)
-  }
-};
-function RichText({richTextResponse, maxElements}) {
-  const components = (0, import_rich_text_react_renderer.documentToReactComponents)(richTextResponse.json, options);
-  if (typeof maxElements === "number") {
-    return /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, components.slice(0, maxElements));
-  }
-  return /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, components);
-}
-var lib_default = RichText;
 
-// app/components/button.tsx
+// route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/routes/index/books.tsx
+var books_exports = {};
+__export(books_exports, {
+  default: () => Books,
+  links: () => links3,
+  loader: () => loader2,
+  meta: () => meta2
+});
+var import_react2 = __toModule(require("react"));
+var import_remix3 = __toModule(require("remix"));
 var import_react_router_dom3 = __toModule(require("react-router-dom"));
-function Link({to, children, extraMargin}) {
-  return /* @__PURE__ */ React.createElement(import_react_router_dom3.Link, {
-    to,
-    className: `inline-block bg-primary-dark hover:bg-primary ease-in-out transition duration-200 text-white py-3 px-4 rounded shadow-md
-        ${extraMargin && "mt-3 mb-5 md:my-3"}`
-  }, children);
+var import_react_clamp_lines = __toModule(require("react-clamp-lines"));
+
+// app/styles/books.css
+var books_default = "/build/_assets/books-5FYJU3DU.css";
+
+// app/utils/contentful-client.ts
+function contentfulClient(query, variables) {
+  return fetch("https://graphql.contentful.com/content/v1/spaces/6exbx0zy4oap", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer u2_zse6aykxBOlBCiTpTBsqGAnc2rOb9N0UTk-33Xyg"
+    },
+    body: JSON.stringify({
+      query,
+      variables
+    })
+  }).then((res) => res.json());
 }
 
 // app/graphql/queries.ts
@@ -271,149 +274,22 @@ var book = `
   ${bookFragment}
 `;
 
-// app/utils/contentful-client.ts
-function contentfulClient(query, variables) {
-  return fetch("https://graphql.contentful.com/content/v1/spaces/6exbx0zy4oap", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer u2_zse6aykxBOlBCiTpTBsqGAnc2rOb9N0UTk-33Xyg"
-    },
-    body: JSON.stringify({
-      query,
-      variables
-    })
-  }).then((res) => res.json());
-}
-
-// app/styles/index.css
-var styles_default = "/build/_assets/index-JEUFNT4K.css";
-
-// app/styles/app.css
-var app_default = "/build/_assets/app-SKIFVIF3.css";
-
-// route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/routes/index.tsx
+// route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/routes/index/books.tsx
 var meta2 = () => {
-  return {
-    title: "Home | Author Madison Bailey",
-    description: "Clean Romances for the Hopeful Romantic"
-  };
-};
-var links2 = () => {
-  return [
-    {rel: "stylesheet", href: styles_default},
-    {rel: "stylesheet", href: app_default}
-  ];
-};
-var loader2 = async () => {
-  const res = await contentfulClient(latestBookRelease);
-  return res.data.books.items[0];
-};
-function Index() {
-  return /* @__PURE__ */ React.createElement(Layout, {
-    noHeader: true
-  }, /* @__PURE__ */ React.createElement("img", {
-    src: "/madison-bailey-logo-rectangle.png",
-    className: "mx-auto my-4 md:w-48"
-  }), /* @__PURE__ */ React.createElement(HomeBanner, null), /* @__PURE__ */ React.createElement(NewestRelease, null));
-}
-function HomeBanner() {
-  return /* @__PURE__ */ React.createElement("div", {
-    id: "home-banner",
-    className: "w-full bg-cover h-0 relative"
-  }, /* @__PURE__ */ React.createElement("div", {
-    className: "absolute inset-0 py-4 px-6 md:p-8"
-  }, /* @__PURE__ */ React.createElement("div", {
-    className: "relative h-full md:bg-gray-100 md:bg-opacity-50 md:p-8 md:w-1/2"
-  }, /* @__PURE__ */ React.createElement("h1", {
-    className: "hidden md:text-7xl md:leading-tight md:mb-6 md:block"
-  }, "Madison", /* @__PURE__ */ React.createElement("br", null), "Bailey"), /* @__PURE__ */ React.createElement("h2", {
-    className: "text-2xl leading-loose xs:text-4xl md:text-3xl font-bold text-gray-800"
-  }, "Clean Romances for the", /* @__PURE__ */ React.createElement("span", {
-    className: "text-primary-dark"
-  }, " Hopeful Romantic")), /* @__PURE__ */ React.createElement("div", {
-    className: "mt-5"
-  }, /* @__PURE__ */ React.createElement(Link, {
-    to: "/site/books"
-  }, "Check out my books")))));
-}
-var NewestRelease = () => {
-  const data = (0, import_remix3.useRouteData)();
-  return /* @__PURE__ */ React.createElement("div", {
-    className: "px-6 py-2"
-  }, /* @__PURE__ */ React.createElement("div", {
-    className: "pt-8 pb-5"
-  }, /* @__PURE__ */ React.createElement("hr", null)), /* @__PURE__ */ React.createElement("div", {
-    className: "md:mx-8 lg:mx-32"
-  }, /* @__PURE__ */ React.createElement("h2", {
-    className: "text-3xl pb-3 pr-12"
-  }, "Read My Newest Release"), /* @__PURE__ */ React.createElement("div", {
-    className: "border-gray-700 rounded-md shadow-md overflow-hidden md:grid md:grid-cols-3 md:gap-4 md:rounded-none md:shadow-none"
-  }, /* @__PURE__ */ React.createElement("img", {
-    src: data.coverArt.url,
-    alt: data.coverArt.title,
-    className: "h-auto"
-  }), /* @__PURE__ */ React.createElement("div", {
-    className: "p-4 pb-0 md:pt-0 md:col-span-2"
-  }, /* @__PURE__ */ React.createElement("h1", {
-    className: "text-2xl font-bold"
-  }, data.title), /* @__PURE__ */ React.createElement(lib_default, {
-    richTextResponse: data.description,
-    maxElements: 2
-  }), /* @__PURE__ */ React.createElement("div", {
-    className: "text-right md:text-left"
-  }, /* @__PURE__ */ React.createElement(Link, {
-    to: `/site/books/${data.sys.id}`,
-    extraMargin: true
-  }, "Read More"))))));
-};
-
-// route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/routes/site.tsx
-var site_exports = {};
-__export(site_exports, {
-  default: () => Site,
-  links: () => links3
-});
-var import_react_router_dom4 = __toModule(require("react-router-dom"));
-var links3 = () => {
-  return [{rel: "stylesheet", href: app_default}];
-};
-function Site() {
-  return /* @__PURE__ */ React.createElement(Layout, null, /* @__PURE__ */ React.createElement(import_react_router_dom4.Outlet, null));
-}
-
-// route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/routes/site/books.tsx
-var books_exports = {};
-__export(books_exports, {
-  default: () => Books,
-  links: () => links4,
-  loader: () => loader3,
-  meta: () => meta3
-});
-var import_react2 = __toModule(require("react"));
-var import_remix4 = __toModule(require("remix"));
-var import_react_router_dom5 = __toModule(require("react-router-dom"));
-var import_react_clamp_lines = __toModule(require("react-clamp-lines"));
-
-// app/styles/books.css
-var books_default = "/build/_assets/books-UVBXFLFK.css";
-
-// route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/routes/site/books.tsx
-var meta3 = () => {
   return {
     title: "Books | Author Madison Bailey",
     description: "Check out Madison Bailey's books!"
   };
 };
-var links4 = () => {
+var links3 = () => {
   return [{rel: "stylesheet", href: books_default}];
 };
-var loader3 = async () => {
+var loader2 = async () => {
   const res = await contentfulClient(allBooks);
   return res.data.books.items;
 };
 function Books() {
-  const books = (0, import_remix4.useRouteData)();
+  const books = (0, import_remix3.useRouteData)();
   return /* @__PURE__ */ import_react2.default.createElement("div", {
     className: "m-5 lg:mx-32"
   }, /* @__PURE__ */ import_react2.default.createElement("div", {
@@ -421,7 +297,7 @@ function Books() {
   }, books.map((book2) => /* @__PURE__ */ import_react2.default.createElement(BookPreviewCard, {
     key: book2.sys.id,
     book: book2
-  }))), /* @__PURE__ */ import_react2.default.createElement(import_react_router_dom5.Outlet, null));
+  }))), /* @__PURE__ */ import_react2.default.createElement(import_react_router_dom3.Outlet, null));
 }
 function getLines(size) {
   if (size >= 1250) {
@@ -450,9 +326,10 @@ var BookPreviewCard = ({book: book2}) => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   });
-  return /* @__PURE__ */ import_react2.default.createElement(import_react_router_dom5.Link, {
+  return /* @__PURE__ */ import_react2.default.createElement(import_react_router_dom3.Link, {
     to: book2.sys.id,
-    className: "book-link"
+    className: "book-link",
+    replace: true
   }, /* @__PURE__ */ import_react2.default.createElement("div", {
     className: "grid grid-cols-3 grid-flow-col gap-3 "
   }, /* @__PURE__ */ import_react2.default.createElement("div", {
@@ -475,68 +352,195 @@ var BookPreviewCard = ({book: book2}) => {
   }))));
 };
 
-// route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/routes/site/books/$id.tsx
+// route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/routes/index/books/$id.tsx
 var id_exports = {};
 __export(id_exports, {
   default: () => Book,
-  loader: () => loader4,
-  meta: () => meta4
+  loader: () => loader3,
+  meta: () => meta3
 });
+var import_react4 = __toModule(require("react"));
+var import_remix4 = __toModule(require("remix"));
+
+// app/components/lib.tsx
 var import_react3 = __toModule(require("react"));
-var import_remix5 = __toModule(require("remix"));
-var meta4 = ({data: book2}) => {
+var import_rich_text_types = __toModule(require("@contentful/rich-text-types"));
+var import_rich_text_react_renderer = __toModule(require("@contentful/rich-text-react-renderer"));
+function Paragraph({children}) {
+  return /* @__PURE__ */ import_react3.default.createElement("p", {
+    className: "text-gray-900 text-lg leading-relaxed py-2"
+  }, children);
+}
+var options = {
+  renderMark: {
+    [import_rich_text_types.MARKS.BOLD]: () => /* @__PURE__ */ import_react3.default.createElement("span", {
+      style: {fontFamily: "TimelessBold"}
+    })
+  },
+  renderNode: {
+    [import_rich_text_types.BLOCKS.PARAGRAPH]: (node, children) => /* @__PURE__ */ import_react3.default.createElement(Paragraph, null, children)
+  }
+};
+function RichText({richTextResponse, maxElements}) {
+  const components = (0, import_rich_text_react_renderer.documentToReactComponents)(richTextResponse.json, options);
+  if (typeof maxElements === "number") {
+    return /* @__PURE__ */ import_react3.default.createElement(import_react3.default.Fragment, null, components.slice(0, maxElements));
+  }
+  return /* @__PURE__ */ import_react3.default.createElement(import_react3.default.Fragment, null, components);
+}
+
+// route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/routes/index/books/$id.tsx
+var meta3 = ({data: book2}) => {
   return {
     title: `${book2.title} | Books | Author Madison Bailey`,
     description: book2.description.json.content[0].content[0].value
   };
 };
-var loader4 = async ({params}) => {
+var loader3 = async ({params}) => {
   const res = await contentfulClient(book, {id: params.id});
   return res.data.book;
 };
-function Book(props) {
-  const [scrolled, setScrolled] = import_react3.default.useState(false);
-  const book2 = (0, import_remix5.useRouteData)();
-  return /* @__PURE__ */ import_react3.default.createElement("div", {
+function Book() {
+  const [scrolled, setScrolled] = import_react4.default.useState(false);
+  const book2 = (0, import_remix4.useRouteData)();
+  return /* @__PURE__ */ import_react4.default.createElement("div", {
     className: "absolute z-10 top-0 left-0 w-full h-full py-6 px-6 lg:px-32 bg-gray-600 bg-opacity-50"
-  }, /* @__PURE__ */ import_react3.default.createElement("div", {
+  }, /* @__PURE__ */ import_react4.default.createElement("div", {
     className: "m-auto w-full h-full bg-white rounded-md overflow-hidden"
-  }, /* @__PURE__ */ import_react3.default.createElement("div", {
+  }, /* @__PURE__ */ import_react4.default.createElement("div", {
     className: `p-3 ${scrolled && "shadow-md"}`
-  }, /* @__PURE__ */ import_react3.default.createElement(CloseButton, null)), /* @__PURE__ */ import_react3.default.createElement("div", {
+  }, /* @__PURE__ */ import_react4.default.createElement(CloseButton, null)), /* @__PURE__ */ import_react4.default.createElement("div", {
     onScroll: (event) => setScrolled(event.target.scrollTop !== 0),
     className: "mx-8 mb-3 h-full sm:grid sm:grid-cols-2 sm:gap-4 md:grid-cols-3 overflow-scroll"
-  }, /* @__PURE__ */ import_react3.default.createElement("div", null, /* @__PURE__ */ import_react3.default.createElement("div", {
+  }, /* @__PURE__ */ import_react4.default.createElement("div", null, /* @__PURE__ */ import_react4.default.createElement("div", {
     className: "border-gray-700 rounded-md shadow-lg"
-  }, /* @__PURE__ */ import_react3.default.createElement("img", {
+  }, /* @__PURE__ */ import_react4.default.createElement("img", {
     src: book2.coverArt.url,
     alt: book2.coverArt.title
-  }))), /* @__PURE__ */ import_react3.default.createElement("div", {
+  }))), /* @__PURE__ */ import_react4.default.createElement("div", {
     className: "p-3 pt-5 sm:pt-0 md:col-span-2"
-  }, /* @__PURE__ */ import_react3.default.createElement("h1", {
+  }, /* @__PURE__ */ import_react4.default.createElement("h1", {
     className: "text-2xl font-bold"
-  }, book2.title), /* @__PURE__ */ import_react3.default.createElement(lib_default, {
+  }, book2.title), /* @__PURE__ */ import_react4.default.createElement(RichText, {
     richTextResponse: book2.description
-  }), /* @__PURE__ */ import_react3.default.createElement("hr", {
+  }), /* @__PURE__ */ import_react4.default.createElement("hr", {
     className: "my-5"
   })))));
 }
 function CloseButton() {
-  return /* @__PURE__ */ import_react3.default.createElement(import_remix5.Link, {
-    to: "/site/books"
-  }, /* @__PURE__ */ import_react3.default.createElement("svg", {
+  return /* @__PURE__ */ import_react4.default.createElement(import_remix4.Link, {
+    to: "/books",
+    replace: true
+  }, /* @__PURE__ */ import_react4.default.createElement("svg", {
     xmlns: "http://www.w3.org/2000/svg",
     className: "h-6 w-6",
     fill: "none",
     viewBox: "0 0 24 24",
     stroke: "currentColor"
-  }, /* @__PURE__ */ import_react3.default.createElement("path", {
+  }, /* @__PURE__ */ import_react4.default.createElement("path", {
     strokeLinecap: "round",
     strokeLinejoin: "round",
     strokeWidth: "2",
     d: "M6 18L18 6M6 6l12 12"
   })));
 }
+
+// route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/routes/index/index.tsx
+var index_exports = {};
+__export(index_exports, {
+  default: () => Index,
+  links: () => links4,
+  loader: () => loader4,
+  meta: () => meta4
+});
+var import_remix5 = __toModule(require("remix"));
+
+// app/components/button.tsx
+var import_react_router_dom4 = __toModule(require("react-router-dom"));
+function Link3({to, children, extraMargin}) {
+  return /* @__PURE__ */ React.createElement(import_react_router_dom4.Link, {
+    to,
+    className: `inline-block bg-primary-dark hover:bg-primary ease-in-out transition duration-200 text-white py-3 px-4 rounded shadow-md
+        ${extraMargin && "mt-3 mb-5 md:my-3"}`
+  }, children);
+}
+
+// app/styles/index.css
+var styles_default = "/build/_assets/index-JEUFNT4K.css";
+
+// route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/routes/index/index.tsx
+var meta4 = () => {
+  return {
+    title: "Home | Author Madison Bailey",
+    description: "Clean Romances for the Hopeful Romantic"
+  };
+};
+var links4 = () => {
+  return [
+    {rel: "stylesheet", href: styles_default},
+    {rel: "stylesheet", href: app_default}
+  ];
+};
+var loader4 = async () => {
+  const res = await contentfulClient(latestBookRelease);
+  return res.data.books.items[0];
+};
+function Index() {
+  return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("img", {
+    src: "/madison-bailey-logo-rectangle.png",
+    className: "mx-auto my-4 md:w-48"
+  }), /* @__PURE__ */ React.createElement(HomeBanner, null), /* @__PURE__ */ React.createElement(NewestRelease, null));
+}
+function HomeBanner() {
+  return /* @__PURE__ */ React.createElement("div", {
+    id: "home-banner",
+    className: "w-full bg-cover h-0 relative"
+  }, /* @__PURE__ */ React.createElement("div", {
+    className: "absolute inset-0 py-4 px-6 md:p-8"
+  }, /* @__PURE__ */ React.createElement("div", {
+    className: "relative h-full md:bg-gray-100 md:bg-opacity-50 md:p-8 md:w-1/2"
+  }, /* @__PURE__ */ React.createElement("h1", {
+    className: "hidden md:text-7xl md:leading-tight md:mb-6 md:block"
+  }, "Madison", /* @__PURE__ */ React.createElement("br", null), "Bailey"), /* @__PURE__ */ React.createElement("h2", {
+    className: "text-2xl leading-loose xs:text-4xl md:text-3xl font-bold text-gray-800"
+  }, "Clean Romances for the", /* @__PURE__ */ React.createElement("span", {
+    className: "text-primary-dark"
+  }, " Hopeful Romantic")), /* @__PURE__ */ React.createElement("div", {
+    className: "mt-5"
+  }, /* @__PURE__ */ React.createElement(Link3, {
+    to: "/site/books"
+  }, "Check out my books")))));
+}
+var NewestRelease = () => {
+  const data = (0, import_remix5.useRouteData)();
+  return /* @__PURE__ */ React.createElement("div", {
+    className: "px-6 py-2"
+  }, /* @__PURE__ */ React.createElement("div", {
+    className: "pt-8 pb-5"
+  }, /* @__PURE__ */ React.createElement("hr", null)), /* @__PURE__ */ React.createElement("div", {
+    className: "md:mx-8 lg:mx-32"
+  }, /* @__PURE__ */ React.createElement("h2", {
+    className: "text-3xl pb-3 pr-12"
+  }, "Read My Newest Release"), /* @__PURE__ */ React.createElement("div", {
+    className: "border-gray-700 rounded-md shadow-md overflow-hidden md:grid md:grid-cols-3 md:gap-4 md:rounded-none md:shadow-none"
+  }, /* @__PURE__ */ React.createElement("img", {
+    src: data.coverArt.url,
+    alt: data.coverArt.title,
+    className: "h-auto"
+  }), /* @__PURE__ */ React.createElement("div", {
+    className: "p-4 pb-0 md:pt-0 md:col-span-2"
+  }, /* @__PURE__ */ React.createElement("h1", {
+    className: "text-2xl font-bold"
+  }, data.title), /* @__PURE__ */ React.createElement(RichText, {
+    richTextResponse: data.description,
+    maxElements: 2
+  }), /* @__PURE__ */ React.createElement("div", {
+    className: "text-right md:text-left"
+  }, /* @__PURE__ */ React.createElement(Link3, {
+    to: `/site/books/${data.sys.id}`,
+    extraMargin: true
+  }, "Read More"))))));
+};
 
 // <stdin>
 var import_assets = __toModule(require("./assets.json"));
@@ -563,26 +567,26 @@ var routes = {
     caseSensitive: false,
     module: routes_exports
   },
-  "routes/site": {
-    id: "routes/site",
-    parentId: "root",
-    path: "site",
-    caseSensitive: false,
-    module: site_exports
-  },
-  "routes/site/books": {
-    id: "routes/site/books",
-    parentId: "routes/site",
+  "routes/index/books": {
+    id: "routes/index/books",
+    parentId: "routes/index",
     path: "books",
     caseSensitive: false,
     module: books_exports
   },
-  "routes/site/books/$id": {
-    id: "routes/site/books/$id",
-    parentId: "routes/site/books",
+  "routes/index/books/$id": {
+    id: "routes/index/books/$id",
+    parentId: "routes/index/books",
     path: ":id",
     caseSensitive: false,
     module: id_exports
+  },
+  "routes/index/index": {
+    id: "routes/index/index",
+    parentId: "routes/index",
+    path: "/",
+    caseSensitive: false,
+    module: index_exports
   }
 };
 // Annotate the CommonJS export names for ESM import in node:

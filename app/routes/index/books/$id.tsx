@@ -2,7 +2,7 @@ import React from "react";
 import { Link, LoaderFunction, MetaFunction, useRouteData } from "remix";
 import { contentfulClient } from "../../../utils/contentful-client";
 import * as queries from "../../../graphql/queries";
-import RichText from "../../../components/lib";
+import { RichText } from "../../../components/lib";
 
 export const meta: MetaFunction = ({ data: book }) => {
   return {
@@ -16,7 +16,7 @@ export const loader: LoaderFunction = async ({ params }) => {
   return res.data.book;
 };
 
-export default function Book(props: any) {
+export default function Book() {
   const [scrolled, setScrolled] = React.useState(false);
   const book = useRouteData();
   return (
@@ -50,7 +50,7 @@ export default function Book(props: any) {
 
 function CloseButton() {
   return (
-    <Link to="/site/books">
+    <Link to="/books" replace>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className="h-6 w-6"

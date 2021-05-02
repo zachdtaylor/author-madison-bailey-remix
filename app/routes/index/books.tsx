@@ -83,7 +83,7 @@ const BookPreviewCard = ({ book }: BookPreviewCardProps) => {
   });
 
   return (
-    <Link to={book.sys.id} className="book-link">
+    <Link to={book.sys.id} className="book-link" replace>
       <div className="grid grid-cols-3 grid-flow-col gap-3 ">
         <div className="row-span-5">
           <img src={book.coverArt.url} alt={book.coverArt.title} />

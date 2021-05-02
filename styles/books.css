@@ -3,9 +3,13 @@
 }
 
 .book-link {
-  @apply inline-block border-gray-700 rounded-md shadow-md overflow-hidden hover:scale-105;
+  @apply inline-block border-gray-700 rounded-md shadow-md overflow-hidden;
   @apply bg-gray-100 left-0 z-0 h-full w-full relative p-0;
   @apply transition-all duration-500 ease-in-out transform;
+}
+
+.book-link:hover {
+  @apply scale-105 z-10;
 }
 
 /* .book-link:active {
@@ -13,7 +17,3 @@
   height: 30rem;
   width: 60rem;
 } */
-
-.book-link-active-background {
-  @apply absolute z-10 top-0 left-0 w-full h-full py-6 px-6 lg:px-32 bg-gray-600 bg-opacity-50;
-}
