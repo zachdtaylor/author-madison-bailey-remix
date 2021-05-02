@@ -38,3 +38,11 @@ export function RichText({ richTextResponse, maxElements }: RichTextProps) {
   }
   return <>{components}</>;
 }
+
+interface MarginProps {
+  children: React.ReactNode;
+}
+
+export function Margin({ children }: MarginProps) {
+  return <div className="m-5 lg:mx-32">{children}</div>;
+}

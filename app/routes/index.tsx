@@ -10,7 +10,7 @@ export let links: LinksFunction = () => {
 export default function Index() {
   return (
     <div>
-      <Header />
+      <NavBar />
       <main>
         <Outlet />
       </main>
@@ -18,7 +18,7 @@ export default function Index() {
   );
 }
 
-function Header() {
+function NavBar() {
   const [mobileMenuActive, setMobileMenuActive] = React.useState(false);
   return (
     <nav className="mx-auto w-full md:border-b-2">
@@ -47,15 +47,15 @@ function Header() {
           <NavBarItem to="/" exact>
             Home
           </NavBarItem>
-          <NavBarItem to="/books">Books</NavBarItem>
+          <NavBarItem to="books">Books</NavBarItem>
         </NavBarGroup>
         <img
           src="/madison-bailey-logo-rectangle.png"
           className="hidden my-4 md:w-48 md:inline"
         />
         <NavBarGroup>
-          <NavBarItem to="/contact">Contact</NavBarItem>
-          <NavBarItem to="/blog">Blog</NavBarItem>
+          <NavBarItem to="contact">Contact</NavBarItem>
+          <NavBarItem to="blog">Blog</NavBarItem>
         </NavBarGroup>
       </ul>
     </nav>

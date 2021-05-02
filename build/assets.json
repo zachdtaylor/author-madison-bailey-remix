@@ -1,5 +1,5 @@
 {
-  "version": "a4a47221",
+  "version": "94246e82",
   "entry": {
     "module": "/build/entry.client-3DF6Y27A.js",
     "imports": [
@@ -30,10 +30,19 @@
       "parentId": "root",
       "path": "/",
       "caseSensitive": false,
-      "module": "/build/routes/index-G4NNLZ64.js",
+      "module": "/build/routes/index-LUWZK6GA.js",
       "imports": [
         "/build/_shared/chunk-743MYCOQ.js"
       ],
+      "hasAction": false,
+      "hasLoader": false
+    },
+    "routes/index/blog": {
+      "id": "routes/index/blog",
+      "parentId": "routes/index",
+      "path": "blog",
+      "caseSensitive": false,
+      "module": "/build/routes/index/blog-O2HZNI4O.js",
       "hasAction": false,
       "hasLoader": false
     },
@@ -42,7 +51,10 @@
       "parentId": "routes/index",
       "path": "books",
       "caseSensitive": false,
-      "module": "/build/routes/index/books-5JSXBJI3.js",
+      "module": "/build/routes/index/books-M2HZT4BA.js",
+      "imports": [
+        "/build/_shared/chunk-2O557GQL.js"
+      ],
       "hasAction": false,
       "hasLoader": true
     },
@@ -51,25 +63,34 @@
       "parentId": "routes/index/books",
       "path": ":id",
       "caseSensitive": false,
-      "module": "/build/routes/index/books/$id-LMTIN5ZN.js",
-      "imports": [
-        "/build/_shared/chunk-DZWZTQRS.js"
-      ],
+      "module": "/build/routes/index/books/$id-PJC36FZX.js",
       "hasAction": false,
       "hasLoader": true
+    },
+    "routes/index/contact": {
+      "id": "routes/index/contact",
+      "parentId": "routes/index",
+      "path": "contact",
+      "caseSensitive": false,
+      "module": "/build/routes/index/contact-UIC5UXBN.js",
+      "imports": [
+        "/build/_shared/chunk-2O557GQL.js"
+      ],
+      "hasAction": false,
+      "hasLoader": false
     },
     "routes/index/index": {
       "id": "routes/index/index",
       "parentId": "routes/index",
       "path": "/",
       "caseSensitive": false,
-      "module": "/build/routes/index/index-CIZMGA3S.js",
+      "module": "/build/routes/index/index-HDVMB2VF.js",
       "imports": [
-        "/build/_shared/chunk-DZWZTQRS.js"
+        "/build/_shared/chunk-2O557GQL.js"
       ],
       "hasAction": false,
       "hasLoader": true
     }
   },
-  "url": "/build/manifest-A4A47221.js"
+  "url": "/build/manifest-94246E82.js"
 }

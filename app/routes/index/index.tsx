@@ -50,7 +50,7 @@ function HomeBanner() {
             <span className="text-primary-dark"> Hopeful Romantic</span>
           </h2>
           <div className="mt-5">
-            <Button.Link to="/books">Check out my books</Button.Link>
+            <Button.Link to="books">Check out my books</Button.Link>
           </div>
         </div>
       </div>
@@ -77,7 +77,7 @@ const NewestRelease = () => {
             <h1 className="text-2xl font-bold">{data.title}</h1>
             <RichText richTextResponse={data.description} maxElements={2} />
             <div className="text-right md:text-left">
-              <Button.Link to={`/books/${data.sys.id}`} extraMargin>
+              <Button.Link to={`books/${data.sys.id}`} extraMargin>
                 Read More
               </Button.Link>
             </div>

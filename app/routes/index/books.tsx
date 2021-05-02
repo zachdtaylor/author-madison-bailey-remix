@@ -10,6 +10,7 @@ import ClampLines from "react-clamp-lines";
 import stylesUrl from "../../styles/books.css";
 import { contentfulClient } from "../../utils/contentful-client";
 import * as queries from "../../graphql/queries";
+import { Margin } from "../../components/lib";
 
 export let meta: MetaFunction = () => {
   return {
@@ -30,14 +31,14 @@ export let loader: LoaderFunction = async () => {
 export default function Books() {
   const books = useRouteData();
   return (
-    <div className="m-5 lg:mx-32">
+    <Margin>
       <div className="books-grid">
         {books.map((book: any) => (
           <BookPreviewCard key={book.sys.id} book={book} />
         ))}
       </div>
       <Outlet />
-    </div>
+    </Margin>
   );
 }
 
