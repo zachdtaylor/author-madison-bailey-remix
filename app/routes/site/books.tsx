@@ -7,7 +7,7 @@ import {
 } from "remix";
 import { Link, Outlet } from "react-router-dom";
 import ClampLines from "react-clamp-lines";
-import stylesUrl from "../../styles/site/books.css";
+import stylesUrl from "../../styles/books.css";
 import { contentfulClient } from "../../utils/contentful-client";
 import * as queries from "../../graphql/queries";
 
@@ -31,7 +31,7 @@ export default function Books() {
   const books = useRouteData();
   return (
     <div className="m-5 lg:mx-32">
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="books-grid">
         {books.map((book: any) => (
           <BookPreviewCard key={book.sys.id} book={book} />
         ))}
@@ -69,6 +69,7 @@ interface BookPreviewCardProps {
 }
 
 const BookPreviewCard = ({ book }: BookPreviewCardProps) => {
+  const [clicked, setClicked] = React.useState(false);
   const [previewLines, setPreviewLines] = React.useState(
     typeof window !== "undefined" ? getLines(window.innerWidth) : 4
   );
@@ -83,7 +84,12 @@ const BookPreviewCard = ({ book }: BookPreviewCardProps) => {
   });
 
   return (
-    <Link to={book.sys.id} className="book-preview-link">
+    <Link
+      to={book.sys.id}
+      className="book-link"
+      onFocus={() => setClicked(true)}
+      onBlur={() => setClicked(false)}
+    >
       <div className="grid grid-cols-3 grid-flow-col gap-3 ">
         <div className="row-span-5">
           <img src={book.coverArt.url} alt={book.coverArt.title} />

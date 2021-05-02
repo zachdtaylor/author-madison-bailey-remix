@@ -1,10 +1,10 @@
 {
-  "version": "8529bdaa",
+  "version": "e5a8ef93",
   "entry": {
-    "module": "/build/entry.client-53MC56UI.js",
+    "module": "/build/entry.client-3DF6Y27A.js",
     "imports": [
-      "/build/_shared/chunk-J376QF6U.js",
-      "/build/_shared/chunk-7LDQFWLN.js",
+      "/build/_shared/chunk-5MZXNG25.js",
+      "/build/_shared/chunk-JM6RBIBN.js",
       "/build/_shared/chunk-DOM5QJLA.js"
     ]
   },
@@ -12,7 +12,7 @@
     "root": {
       "id": "root",
       "path": "/",
-      "module": "/build/root-P2RLMHS3.js",
+      "module": "/build/root-O3RM4IXM.js",
       "hasAction": false,
       "hasLoader": true
     },
@@ -30,10 +30,10 @@
       "parentId": "root",
       "path": "/",
       "caseSensitive": false,
-      "module": "/build/routes/index-QB5V37EB.js",
+      "module": "/build/routes/index-OXI5AAFI.js",
       "imports": [
         "/build/_shared/chunk-743MYCOQ.js",
-        "/build/_shared/chunk-CCPAQVSL.js"
+        "/build/_shared/chunk-FUU2C52P.js"
       ],
       "hasAction": false,
       "hasLoader": true
@@ -43,10 +43,10 @@
       "parentId": "root",
       "path": "site",
       "caseSensitive": false,
-      "module": "/build/routes/site-6XEHDNPN.js",
+      "module": "/build/routes/site-ZMDUQ6PB.js",
       "imports": [
         "/build/_shared/chunk-743MYCOQ.js",
-        "/build/_shared/chunk-CCPAQVSL.js"
+        "/build/_shared/chunk-FUU2C52P.js"
       ],
       "hasAction": false,
       "hasLoader": false
@@ -56,7 +56,7 @@
       "parentId": "routes/site",
       "path": "books",
       "caseSensitive": false,
-      "module": "/build/routes/site/books-CPKVEVUN.js",
+      "module": "/build/routes/site/books-K67XEVOV.js",
       "hasAction": false,
       "hasLoader": true
     },
@@ -65,13 +65,13 @@
       "parentId": "routes/site/books",
       "path": ":id",
       "caseSensitive": false,
-      "module": "/build/routes/site/books/$id-WQSRLX4A.js",
+      "module": "/build/routes/site/books/$id-UXE34XJJ.js",
       "imports": [
-        "/build/_shared/chunk-CCPAQVSL.js"
+        "/build/_shared/chunk-FUU2C52P.js"
       ],
       "hasAction": false,
       "hasLoader": true
     }
   },
-  "url": "/build/manifest-8529BDAA.js"
+  "url": "/build/manifest-E5A8EF93.js"
 }

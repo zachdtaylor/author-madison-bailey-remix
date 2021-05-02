@@ -81,7 +81,7 @@ const NewestRelease = () => {
             <h1 className="text-2xl font-bold">{data.title}</h1>
             <RichText richTextResponse={data.description} maxElements={2} />
             <div className="text-right md:text-left">
-              <Button.Link to="/books" extraMargin>
+              <Button.Link to={`/site/books/${data.sys.id}`} extraMargin>
                 Read More
               </Button.Link>
             </div>

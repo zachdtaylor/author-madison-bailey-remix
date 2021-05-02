@@ -363,7 +363,7 @@ var NewestRelease = () => {
   }), /* @__PURE__ */ React.createElement("div", {
     className: "text-right md:text-left"
   }, /* @__PURE__ */ React.createElement(Link, {
-    to: "/books",
+    to: `/site/books/${data.sys.id}`,
     extraMargin: true
   }, "Read More"))))));
 };
@@ -374,12 +374,12 @@ __export(site_exports, {
   default: () => Site,
   links: () => links3
 });
-var import_react_router = __toModule(require("react-router"));
+var import_react_router_dom4 = __toModule(require("react-router-dom"));
 var links3 = () => {
   return [{rel: "stylesheet", href: app_default}];
 };
 function Site() {
-  return /* @__PURE__ */ React.createElement(Layout, null, /* @__PURE__ */ React.createElement(import_react_router.Outlet, null));
+  return /* @__PURE__ */ React.createElement(Layout, null, /* @__PURE__ */ React.createElement(import_react_router_dom4.Outlet, null));
 }
 
 // route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/routes/site/books.tsx
@@ -392,11 +392,11 @@ __export(books_exports, {
 });
 var import_react2 = __toModule(require("react"));
 var import_remix4 = __toModule(require("remix"));
-var import_react_router_dom4 = __toModule(require("react-router-dom"));
+var import_react_router_dom5 = __toModule(require("react-router-dom"));
 var import_react_clamp_lines = __toModule(require("react-clamp-lines"));
 
-// app/styles/site/books.css
-var books_default = "/build/_assets/books-WX6Q3HNR.css";
+// app/styles/books.css
+var books_default = "/build/_assets/books-UVBXFLFK.css";
 
 // route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/routes/site/books.tsx
 var meta3 = () => {
@@ -417,11 +417,11 @@ function Books() {
   return /* @__PURE__ */ import_react2.default.createElement("div", {
     className: "m-5 lg:mx-32"
   }, /* @__PURE__ */ import_react2.default.createElement("div", {
-    className: "grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
+    className: "books-grid"
   }, books.map((book2) => /* @__PURE__ */ import_react2.default.createElement(BookPreviewCard, {
     key: book2.sys.id,
     book: book2
-  }))), /* @__PURE__ */ import_react2.default.createElement(import_react_router_dom4.Outlet, null));
+  }))), /* @__PURE__ */ import_react2.default.createElement(import_react_router_dom5.Outlet, null));
 }
 function getLines(size) {
   if (size >= 1250) {
@@ -441,6 +441,7 @@ function getLines(size) {
   }
 }
 var BookPreviewCard = ({book: book2}) => {
+  const [clicked, setClicked] = import_react2.default.useState(false);
   const [previewLines, setPreviewLines] = import_react2.default.useState(typeof window !== "undefined" ? getLines(window.innerWidth) : 4);
   import_react2.default.useEffect(() => {
     const handleResize = () => {
@@ -450,9 +451,11 @@ var BookPreviewCard = ({book: book2}) => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   });
-  return /* @__PURE__ */ import_react2.default.createElement(import_react_router_dom4.Link, {
+  return /* @__PURE__ */ import_react2.default.createElement(import_react_router_dom5.Link, {
     to: book2.sys.id,
-    className: "book-preview-link"
+    className: "book-link",
+    onFocus: () => setClicked(true),
+    onBlur: () => setClicked(false)
   }, /* @__PURE__ */ import_react2.default.createElement("div", {
     className: "grid grid-cols-3 grid-flow-col gap-3 "
   }, /* @__PURE__ */ import_react2.default.createElement("div", {
@@ -479,51 +482,61 @@ var BookPreviewCard = ({book: book2}) => {
 var id_exports = {};
 __export(id_exports, {
   default: () => Book,
-  loader: () => loader4
+  loader: () => loader4,
+  meta: () => meta4
 });
+var import_react3 = __toModule(require("react"));
 var import_remix5 = __toModule(require("remix"));
+var meta4 = ({data: book2}) => {
+  return {
+    title: `${book2.title} | Books | Author Madison Bailey`,
+    description: book2.description.json.content[0].content[0].value
+  };
+};
 var loader4 = async ({params}) => {
   const res = await contentfulClient(book, {id: params.id});
   return res.data.book;
 };
-function Book() {
+function Book(props) {
+  const [scrolled, setScrolled] = import_react3.default.useState(false);
   const book2 = (0, import_remix5.useRouteData)();
-  return /* @__PURE__ */ React.createElement("div", {
-    className: "absolute z-10 top-0 left-0 w-full h-full bg-gray-600 bg-opacity-50 md:p-5"
-  }, /* @__PURE__ */ React.createElement("div", {
-    className: "m-auto w-10/12 h-10/12 bg-white p-3 rounded-md mt-5"
-  }, /* @__PURE__ */ React.createElement("div", {
-    className: "float-right"
-  }, /* @__PURE__ */ React.createElement(CloseButton, null)), /* @__PURE__ */ React.createElement("div", {
-    className: "m-5 sm:grid sm:grid-cols-2 sm:gap-4 md:grid-cols-3"
-  }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", {
-    className: "border-gray-700 rounded-md shadow-lg overflow-hidden"
-  }, /* @__PURE__ */ React.createElement("img", {
+  return /* @__PURE__ */ import_react3.default.createElement("div", {
+    className: "absolute z-10 top-0 left-0 w-full h-full py-6 px-6 lg:px-32 bg-gray-600 bg-opacity-50"
+  }, /* @__PURE__ */ import_react3.default.createElement("div", {
+    className: "m-auto w-full h-full bg-white rounded-md overflow-hidden"
+  }, /* @__PURE__ */ import_react3.default.createElement("div", {
+    className: `p-3 ${scrolled && "shadow-md"}`
+  }, /* @__PURE__ */ import_react3.default.createElement(CloseButton, null)), /* @__PURE__ */ import_react3.default.createElement("div", {
+    onScroll: (event) => setScrolled(event.target.scrollTop !== 0),
+    className: "mx-8 mb-3 h-full sm:grid sm:grid-cols-2 sm:gap-4 md:grid-cols-3 overflow-scroll"
+  }, /* @__PURE__ */ import_react3.default.createElement("div", null, /* @__PURE__ */ import_react3.default.createElement("div", {
+    className: "border-gray-700 rounded-md shadow-lg"
+  }, /* @__PURE__ */ import_react3.default.createElement("img", {
     src: book2.coverArt.url,
     alt: book2.coverArt.title
-  }))), /* @__PURE__ */ React.createElement("div", {
+  }))), /* @__PURE__ */ import_react3.default.createElement("div", {
     className: "p-3 pt-5 sm:pt-0 md:col-span-2"
-  }, /* @__PURE__ */ React.createElement("h1", {
+  }, /* @__PURE__ */ import_react3.default.createElement("h1", {
     className: "text-2xl font-bold"
-  }, book2.title), /* @__PURE__ */ React.createElement(lib_default, {
+  }, book2.title), /* @__PURE__ */ import_react3.default.createElement(lib_default, {
     richTextResponse: book2.description
-  }), /* @__PURE__ */ React.createElement("hr", {
+  }), /* @__PURE__ */ import_react3.default.createElement("hr", {
     className: "my-5"
   })))));
 }
 function CloseButton() {
-  return /* @__PURE__ */ React.createElement(import_remix5.Link, {
+  return /* @__PURE__ */ import_react3.default.createElement(import_remix5.Link, {
     to: "/site/books"
-  }, /* @__PURE__ */ React.createElement("svg", {
+  }, /* @__PURE__ */ import_react3.default.createElement("svg", {
     xmlns: "http://www.w3.org/2000/svg",
     className: "h-6 w-6",
     fill: "none",
     viewBox: "0 0 24 24",
     stroke: "currentColor"
-  }, /* @__PURE__ */ React.createElement("path", {
-    "stroke-linecap": "round",
-    "stroke-linejoin": "round",
-    "stroke-width": "2",
+  }, /* @__PURE__ */ import_react3.default.createElement("path", {
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    strokeWidth: "2",
     d: "M6 18L18 6M6 6l12 12"
   })));
 }
