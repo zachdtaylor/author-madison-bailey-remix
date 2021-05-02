@@ -9,55 +9,56 @@ export let links: LinksFunction = () => {
 
 export default function Index() {
   return (
-    <Layout>
-      <Outlet />
-    </Layout>
+    <div>
+      <Header />
+      <main>
+        <Outlet />
+      </main>
+    </div>
   );
 }
 
 function Header() {
   const [mobileMenuActive, setMobileMenuActive] = React.useState(false);
   return (
-    <header id="top" className="mx-auto w-full">
-      <nav className="md:border-b-2">
-        <div className="flex flex-row justify-between shadow-md md:hidden">
-          <img
-            src="/madison-bailey-logo.png"
-            alt="Madison Bailey Logo"
-            className="max-h-24"
-          />
-          <div
-            className="w-24 flex items-center"
-            role="button"
-            tabIndex={0}
-            onClick={() => setMobileMenuActive(!mobileMenuActive)}
-            onKeyDown={() => setMobileMenuActive(!mobileMenuActive)}
-          >
-            <MenuIcon />
-          </div>
-        </div>
-        <ul
-          className={`my-3 mx-5 md:flex md:flex-row md:justify-center ${
-            mobileMenuActive ? "block" : "hidden"
-          }`}
+    <nav className="mx-auto w-full md:border-b-2">
+      <div className="flex flex-row justify-between shadow-md md:hidden">
+        <img
+          src="/madison-bailey-logo.png"
+          alt="Madison Bailey Logo"
+          className="max-h-24"
+        />
+        <div
+          className="w-24 flex items-center"
+          role="button"
+          tabIndex={0}
+          onClick={() => setMobileMenuActive(!mobileMenuActive)}
+          onKeyDown={() => setMobileMenuActive(!mobileMenuActive)}
         >
-          <NavBarGroup>
-            <NavBarItem to="/" exact>
-              Home
-            </NavBarItem>
-            <NavBarItem to="/books">Books</NavBarItem>
-          </NavBarGroup>
-          <img
-            src="/madison-bailey-logo-rectangle.png"
-            className="hidden my-4 md:w-48 md:inline"
-          />
-          <NavBarGroup>
-            <NavBarItem to="/contact">Contact</NavBarItem>
-            <NavBarItem to="/blog">Blog</NavBarItem>
-          </NavBarGroup>
-        </ul>
-      </nav>
-    </header>
+          <MenuIcon />
+        </div>
+      </div>
+      <ul
+        className={`my-3 mx-5 md:flex md:flex-row md:justify-center ${
+          mobileMenuActive ? "block" : "hidden"
+        }`}
+      >
+        <NavBarGroup>
+          <NavBarItem to="/" exact>
+            Home
+          </NavBarItem>
+          <NavBarItem to="/books">Books</NavBarItem>
+        </NavBarGroup>
+        <img
+          src="/madison-bailey-logo-rectangle.png"
+          className="hidden my-4 md:w-48 md:inline"
+        />
+        <NavBarGroup>
+          <NavBarItem to="/contact">Contact</NavBarItem>
+          <NavBarItem to="/blog">Blog</NavBarItem>
+        </NavBarGroup>
+      </ul>
+    </nav>
   );
 }
 
@@ -88,27 +89,6 @@ interface NavBarGroupProps {
 
 function NavBarGroup({ children }: NavBarGroupProps) {
   return <div className="md:flex md:flex-row md:items-center">{children}</div>;
-}
-
-interface LayoutProps {
-  children: React.ReactNode;
-  noHeader?: boolean;
-}
-
-export function Layout({ children, noHeader }: LayoutProps) {
-  return (
-    <div
-      style={{
-        minHeight: "100%",
-        display: "grid",
-        gridTemplateRows: "auto 1fr auto",
-        gridTemplateColumns: "100%",
-      }}
-    >
-      {!noHeader && <Header />}
-      <main>{children}</main>
-    </div>
-  );
 }
 
 function MenuIcon() {

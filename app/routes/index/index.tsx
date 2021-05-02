@@ -50,7 +50,7 @@ function HomeBanner() {
             <span className="text-primary-dark"> Hopeful Romantic</span>
           </h2>
           <div className="mt-5">
-            <Button.Link to="/site/books">Check out my books</Button.Link>
+            <Button.Link to="/books">Check out my books</Button.Link>
           </div>
         </div>
       </div>

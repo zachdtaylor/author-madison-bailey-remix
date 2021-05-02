@@ -125,7 +125,6 @@ function FourOhFour() {
 // route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/routes/index.tsx
 var routes_exports = {};
 __export(routes_exports, {
-  Layout: () => Layout,
   default: () => Index,
   links: () => links2
 });
@@ -140,15 +139,12 @@ var links2 = () => {
   return [{rel: "stylesheet", href: app_default}];
 };
 function Index() {
-  return /* @__PURE__ */ import_react.default.createElement(Layout, null, /* @__PURE__ */ import_react.default.createElement(import_react_router_dom2.Outlet, null));
+  return /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement(Header, null), /* @__PURE__ */ import_react.default.createElement("main", null, /* @__PURE__ */ import_react.default.createElement(import_react_router_dom2.Outlet, null)));
 }
 function Header() {
   const [mobileMenuActive, setMobileMenuActive] = import_react.default.useState(false);
-  return /* @__PURE__ */ import_react.default.createElement("header", {
-    id: "top",
-    className: "mx-auto w-full"
-  }, /* @__PURE__ */ import_react.default.createElement("nav", {
-    className: "md:border-b-2"
+  return /* @__PURE__ */ import_react.default.createElement("nav", {
+    className: "mx-auto w-full md:border-b-2"
   }, /* @__PURE__ */ import_react.default.createElement("div", {
     className: "flex flex-row justify-between shadow-md md:hidden"
   }, /* @__PURE__ */ import_react.default.createElement("img", {
@@ -175,7 +171,7 @@ function Header() {
     to: "/contact"
   }, "Contact"), /* @__PURE__ */ import_react.default.createElement(NavBarItem, {
     to: "/blog"
-  }, "Blog")))));
+  }, "Blog"))));
 }
 function NavBarItem({to, exact, children}) {
   return /* @__PURE__ */ import_react.default.createElement(import_react_router_dom2.NavLink, {
@@ -191,16 +187,6 @@ function NavBarGroup({children}) {
   return /* @__PURE__ */ import_react.default.createElement("div", {
     className: "md:flex md:flex-row md:items-center"
   }, children);
-}
-function Layout({children, noHeader}) {
-  return /* @__PURE__ */ import_react.default.createElement("div", {
-    style: {
-      minHeight: "100%",
-      display: "grid",
-      gridTemplateRows: "auto 1fr auto",
-      gridTemplateColumns: "100%"
-    }
-  }, !noHeader && /* @__PURE__ */ import_react.default.createElement(Header, null), /* @__PURE__ */ import_react.default.createElement("main", null, children));
 }
 function MenuIcon() {
   return /* @__PURE__ */ import_react.default.createElement("svg", {
@@ -525,7 +511,7 @@ function HomeBanner() {
   }, " Hopeful Romantic")), /* @__PURE__ */ React.createElement("div", {
     className: "mt-5"
   }, /* @__PURE__ */ React.createElement(Link3, {
-    to: "/site/books"
+    to: "/books"
   }, "Check out my books")))));
 }
 var NewestRelease = () => {

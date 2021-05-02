@@ -1,5 +1,5 @@
 {
-  "version": "647e518b",
+  "version": "a4a47221",
   "entry": {
     "module": "/build/entry.client-3DF6Y27A.js",
     "imports": [
@@ -30,7 +30,7 @@
       "parentId": "root",
       "path": "/",
       "caseSensitive": false,
-      "module": "/build/routes/index-6YAYXDKV.js",
+      "module": "/build/routes/index-G4NNLZ64.js",
       "imports": [
         "/build/_shared/chunk-743MYCOQ.js"
       ],
@@ -63,7 +63,7 @@
       "parentId": "routes/index",
       "path": "/",
       "caseSensitive": false,
-      "module": "/build/routes/index/index-EY6VS7BH.js",
+      "module": "/build/routes/index/index-CIZMGA3S.js",
       "imports": [
         "/build/_shared/chunk-DZWZTQRS.js"
       ],
@@ -71,5 +71,5 @@
       "hasLoader": true
     }
   },
-  "url": "/build/manifest-647E518B.js"
+  "url": "/build/manifest-A4A47221.js"
 }
