@@ -441,7 +441,6 @@ function getLines(size) {
   }
 }
 var BookPreviewCard = ({book: book2}) => {
-  const [clicked, setClicked] = import_react2.default.useState(false);
   const [previewLines, setPreviewLines] = import_react2.default.useState(typeof window !== "undefined" ? getLines(window.innerWidth) : 4);
   import_react2.default.useEffect(() => {
     const handleResize = () => {
@@ -453,9 +452,7 @@ var BookPreviewCard = ({book: book2}) => {
   });
   return /* @__PURE__ */ import_react2.default.createElement(import_react_router_dom5.Link, {
     to: book2.sys.id,
-    className: "book-link",
-    onFocus: () => setClicked(true),
-    onBlur: () => setClicked(false)
+    className: "book-link"
   }, /* @__PURE__ */ import_react2.default.createElement("div", {
     className: "grid grid-cols-3 grid-flow-col gap-3 "
   }, /* @__PURE__ */ import_react2.default.createElement("div", {

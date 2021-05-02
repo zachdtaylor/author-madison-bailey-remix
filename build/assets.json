@@ -1,5 +1,5 @@
 {
-  "version": "e5a8ef93",
+  "version": "0f85c7f2",
   "entry": {
     "module": "/build/entry.client-3DF6Y27A.js",
     "imports": [
@@ -56,7 +56,7 @@
       "parentId": "routes/site",
       "path": "books",
       "caseSensitive": false,
-      "module": "/build/routes/site/books-K67XEVOV.js",
+      "module": "/build/routes/site/books-RTMBJUH4.js",
       "hasAction": false,
       "hasLoader": true
     },
@@ -73,5 +73,5 @@
       "hasLoader": true
     }
   },
-  "url": "/build/manifest-E5A8EF93.js"
+  "url": "/build/manifest-0F85C7F2.js"
 }

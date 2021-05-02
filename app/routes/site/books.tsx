@@ -69,7 +69,6 @@ interface BookPreviewCardProps {
 }
 
 const BookPreviewCard = ({ book }: BookPreviewCardProps) => {
-  const [clicked, setClicked] = React.useState(false);
   const [previewLines, setPreviewLines] = React.useState(
     typeof window !== "undefined" ? getLines(window.innerWidth) : 4
   );
@@ -84,12 +83,7 @@ const BookPreviewCard = ({ book }: BookPreviewCardProps) => {
   });
 
   return (
-    <Link
-      to={book.sys.id}
-      className="book-link"
-      onFocus={() => setClicked(true)}
-      onBlur={() => setClicked(false)}
-    >
+    <Link to={book.sys.id} className="book-link">
       <div className="grid grid-cols-3 grid-flow-col gap-3 ">
         <div className="row-span-5">
           <img src={book.coverArt.url} alt={book.coverArt.title} />
