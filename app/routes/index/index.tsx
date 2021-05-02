@@ -29,10 +29,6 @@ export let loader: LoaderFunction = async () => {
 export default function Index() {
   return (
     <>
-      <img
-        src="/madison-bailey-logo-rectangle.png"
-        className="mx-auto my-4 md:w-48"
-      />
       <HomeBanner />
       <NewestRelease />
     </>
@@ -81,7 +77,7 @@ const NewestRelease = () => {
             <h1 className="text-2xl font-bold">{data.title}</h1>
             <RichText richTextResponse={data.description} maxElements={2} />
             <div className="text-right md:text-left">
-              <Button.Link to={`/site/books/${data.sys.id}`} extraMargin>
+              <Button.Link to={`/books/${data.sys.id}`} extraMargin>
                 Read More
               </Button.Link>
             </div>

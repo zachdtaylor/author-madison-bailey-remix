@@ -7,11 +7,57 @@ export let links: LinksFunction = () => {
   return [{ rel: "stylesheet", href: tailwindUrl }];
 };
 
-export default function Site() {
+export default function Index() {
   return (
     <Layout>
       <Outlet />
     </Layout>
+  );
+}
+
+function Header() {
+  const [mobileMenuActive, setMobileMenuActive] = React.useState(false);
+  return (
+    <header id="top" className="mx-auto w-full">
+      <nav className="md:border-b-2">
+        <div className="flex flex-row justify-between shadow-md md:hidden">
+          <img
+            src="/madison-bailey-logo.png"
+            alt="Madison Bailey Logo"
+            className="max-h-24"
+          />
+          <div
+            className="w-24 flex items-center"
+            role="button"
+            tabIndex={0}
+            onClick={() => setMobileMenuActive(!mobileMenuActive)}
+            onKeyDown={() => setMobileMenuActive(!mobileMenuActive)}
+          >
+            <MenuIcon />
+          </div>
+        </div>
+        <ul
+          className={`my-3 mx-5 md:flex md:flex-row md:justify-center ${
+            mobileMenuActive ? "block" : "hidden"
+          }`}
+        >
+          <NavBarGroup>
+            <NavBarItem to="/" exact>
+              Home
+            </NavBarItem>
+            <NavBarItem to="/books">Books</NavBarItem>
+          </NavBarGroup>
+          <img
+            src="/madison-bailey-logo-rectangle.png"
+            className="hidden my-4 md:w-48 md:inline"
+          />
+          <NavBarGroup>
+            <NavBarItem to="/contact">Contact</NavBarItem>
+            <NavBarItem to="/blog">Blog</NavBarItem>
+          </NavBarGroup>
+        </ul>
+      </nav>
+    </header>
   );
 }
 
@@ -36,42 +82,12 @@ function NavBarItem({ to, exact, children }: NavBarItemProps) {
   );
 }
 
-function Header() {
-  const [mobileMenuActive, setMobileMenuActive] = React.useState(false);
-  return (
-    <header id="top" className="mx-auto w-full">
-      <nav
-        id="site-menu"
-        className="flex-row md:flex md:justify-between md:border-b-2"
-      >
-        <div className="flex flex-row justify-beclassNameeen px-2 py-1 pr-4 shadow-md md:shadow-none">
-          <img src="/madison-bailey-logo.png" className="w-16" />
-          <div
-            id="hamburgerbtn"
-            className="w-10 relative md:hidden"
-            role="button"
-            tabIndex={0}
-            onClick={() => setMobileMenuActive(!mobileMenuActive)}
-            onKeyDown={() => setMobileMenuActive(!mobileMenuActive)}
-          >
-            <div className="absolute bottom-0 top-0"></div>
-          </div>
-        </div>
-        <ul
-          className={`hidden my-3 mx-5 md:flex md:flex-row ${
-            mobileMenuActive ? "block" : ""
-          }`}
-        >
-          <NavBarItem to="/" exact>
-            Home
-          </NavBarItem>
-          <NavBarItem to="/books">Books</NavBarItem>
-          <NavBarItem to="/contact">Contact</NavBarItem>
-          <NavBarItem to="/blog">Blog</NavBarItem>
-        </ul>
-      </nav>
-    </header>
-  );
+interface NavBarGroupProps {
+  children: React.ReactNode;
+}
+
+function NavBarGroup({ children }: NavBarGroupProps) {
+  return <div className="md:flex md:flex-row md:items-center">{children}</div>;
 }
 
 interface LayoutProps {
@@ -92,5 +108,25 @@ export function Layout({ children, noHeader }: LayoutProps) {
       {!noHeader && <Header />}
       <main>{children}</main>
     </div>
+  );
+}
+
+function MenuIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      className="my-0 mx-auto"
+      viewBox="0 0 24 24"
+      width="45"
+      stroke="currentColor"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M4 6h16M4 12h16M4 18h16"
+      />
+    </svg>
   );
 }

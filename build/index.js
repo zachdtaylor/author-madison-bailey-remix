@@ -126,7 +126,7 @@ function FourOhFour() {
 var routes_exports = {};
 __export(routes_exports, {
   Layout: () => Layout,
-  default: () => Site,
+  default: () => Index,
   links: () => links2
 });
 var import_react = __toModule(require("react"));
@@ -139,8 +139,43 @@ var app_default = "/build/_assets/app-SKIFVIF3.css";
 var links2 = () => {
   return [{rel: "stylesheet", href: app_default}];
 };
-function Site() {
+function Index() {
   return /* @__PURE__ */ import_react.default.createElement(Layout, null, /* @__PURE__ */ import_react.default.createElement(import_react_router_dom2.Outlet, null));
+}
+function Header() {
+  const [mobileMenuActive, setMobileMenuActive] = import_react.default.useState(false);
+  return /* @__PURE__ */ import_react.default.createElement("header", {
+    id: "top",
+    className: "mx-auto w-full"
+  }, /* @__PURE__ */ import_react.default.createElement("nav", {
+    className: "md:border-b-2"
+  }, /* @__PURE__ */ import_react.default.createElement("div", {
+    className: "flex flex-row justify-between shadow-md md:hidden"
+  }, /* @__PURE__ */ import_react.default.createElement("img", {
+    src: "/madison-bailey-logo.png",
+    alt: "Madison Bailey Logo",
+    className: "max-h-24"
+  }), /* @__PURE__ */ import_react.default.createElement("div", {
+    className: "w-24 flex items-center",
+    role: "button",
+    tabIndex: 0,
+    onClick: () => setMobileMenuActive(!mobileMenuActive),
+    onKeyDown: () => setMobileMenuActive(!mobileMenuActive)
+  }, /* @__PURE__ */ import_react.default.createElement(MenuIcon, null))), /* @__PURE__ */ import_react.default.createElement("ul", {
+    className: `my-3 mx-5 md:flex md:flex-row md:justify-center ${mobileMenuActive ? "block" : "hidden"}`
+  }, /* @__PURE__ */ import_react.default.createElement(NavBarGroup, null, /* @__PURE__ */ import_react.default.createElement(NavBarItem, {
+    to: "/",
+    exact: true
+  }, "Home"), /* @__PURE__ */ import_react.default.createElement(NavBarItem, {
+    to: "/books"
+  }, "Books")), /* @__PURE__ */ import_react.default.createElement("img", {
+    src: "/madison-bailey-logo-rectangle.png",
+    className: "hidden my-4 md:w-48 md:inline"
+  }), /* @__PURE__ */ import_react.default.createElement(NavBarGroup, null, /* @__PURE__ */ import_react.default.createElement(NavBarItem, {
+    to: "/contact"
+  }, "Contact"), /* @__PURE__ */ import_react.default.createElement(NavBarItem, {
+    to: "/blog"
+  }, "Blog")))));
 }
 function NavBarItem({to, exact, children}) {
   return /* @__PURE__ */ import_react.default.createElement(import_react_router_dom2.NavLink, {
@@ -152,40 +187,10 @@ function NavBarItem({to, exact, children}) {
     className: "py-4 border-b-2 md:mx-4 md:py-2 md:border-b-0 hover:text-primary-dark transition duration-200 ease-in-out"
   }, children));
 }
-function Header() {
-  const [mobileMenuActive, setMobileMenuActive] = import_react.default.useState(false);
-  return /* @__PURE__ */ import_react.default.createElement("header", {
-    id: "top",
-    className: "mx-auto w-full"
-  }, /* @__PURE__ */ import_react.default.createElement("nav", {
-    id: "site-menu",
-    className: "flex-row md:flex md:justify-between md:border-b-2"
-  }, /* @__PURE__ */ import_react.default.createElement("div", {
-    className: "flex flex-row justify-beclassNameeen px-2 py-1 pr-4 shadow-md md:shadow-none"
-  }, /* @__PURE__ */ import_react.default.createElement("img", {
-    src: "/madison-bailey-logo.png",
-    className: "w-16"
-  }), /* @__PURE__ */ import_react.default.createElement("div", {
-    id: "hamburgerbtn",
-    className: "w-10 relative md:hidden",
-    role: "button",
-    tabIndex: 0,
-    onClick: () => setMobileMenuActive(!mobileMenuActive),
-    onKeyDown: () => setMobileMenuActive(!mobileMenuActive)
-  }, /* @__PURE__ */ import_react.default.createElement("div", {
-    className: "absolute bottom-0 top-0"
-  }))), /* @__PURE__ */ import_react.default.createElement("ul", {
-    className: `hidden my-3 mx-5 md:flex md:flex-row ${mobileMenuActive ? "block" : ""}`
-  }, /* @__PURE__ */ import_react.default.createElement(NavBarItem, {
-    to: "/",
-    exact: true
-  }, "Home"), /* @__PURE__ */ import_react.default.createElement(NavBarItem, {
-    to: "/books"
-  }, "Books"), /* @__PURE__ */ import_react.default.createElement(NavBarItem, {
-    to: "/contact"
-  }, "Contact"), /* @__PURE__ */ import_react.default.createElement(NavBarItem, {
-    to: "/blog"
-  }, "Blog"))));
+function NavBarGroup({children}) {
+  return /* @__PURE__ */ import_react.default.createElement("div", {
+    className: "md:flex md:flex-row md:items-center"
+  }, children);
 }
 function Layout({children, noHeader}) {
   return /* @__PURE__ */ import_react.default.createElement("div", {
@@ -196,6 +201,21 @@ function Layout({children, noHeader}) {
       gridTemplateColumns: "100%"
     }
   }, !noHeader && /* @__PURE__ */ import_react.default.createElement(Header, null), /* @__PURE__ */ import_react.default.createElement("main", null, children));
+}
+function MenuIcon() {
+  return /* @__PURE__ */ import_react.default.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    className: "my-0 mx-auto",
+    viewBox: "0 0 24 24",
+    width: "45",
+    stroke: "currentColor"
+  }, /* @__PURE__ */ import_react.default.createElement("path", {
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    strokeWidth: 2,
+    d: "M4 6h16M4 12h16M4 18h16"
+  }));
 }
 
 // route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/routes/index/books.tsx
@@ -448,7 +468,7 @@ function CloseButton() {
 // route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/routes/index/index.tsx
 var index_exports = {};
 __export(index_exports, {
-  default: () => Index,
+  default: () => Index2,
   links: () => links4,
   loader: () => loader4,
   meta: () => meta4
@@ -485,11 +505,8 @@ var loader4 = async () => {
   const res = await contentfulClient(latestBookRelease);
   return res.data.books.items[0];
 };
-function Index() {
-  return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("img", {
-    src: "/madison-bailey-logo-rectangle.png",
-    className: "mx-auto my-4 md:w-48"
-  }), /* @__PURE__ */ React.createElement(HomeBanner, null), /* @__PURE__ */ React.createElement(NewestRelease, null));
+function Index2() {
+  return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(HomeBanner, null), /* @__PURE__ */ React.createElement(NewestRelease, null));
 }
 function HomeBanner() {
   return /* @__PURE__ */ React.createElement("div", {
@@ -537,7 +554,7 @@ var NewestRelease = () => {
   }), /* @__PURE__ */ React.createElement("div", {
     className: "text-right md:text-left"
   }, /* @__PURE__ */ React.createElement(Link3, {
-    to: `/site/books/${data.sys.id}`,
+    to: `/books/${data.sys.id}`,
     extraMargin: true
   }, "Read More"))))));
 };
