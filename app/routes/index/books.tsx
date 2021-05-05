@@ -1,16 +1,16 @@
 import React from "react";
-import {
-  MetaFunction,
-  LoaderFunction,
-  LinksFunction,
-  useRouteData,
-} from "remix";
+import { useRouteData } from "remix";
+import type { MetaFunction, LoaderFunction, LinksFunction } from "remix";
 import { Link, Outlet } from "react-router-dom";
 import ClampLines from "react-clamp-lines";
 import stylesUrl from "../../styles/books.css";
 import { contentfulClient } from "../../utils/contentful-client";
 import * as queries from "../../graphql/queries";
 import { Margin } from "../../components/lib";
+
+export const handle = {
+  hydrate: true,
+};
 
 export let meta: MetaFunction = () => {
   return {

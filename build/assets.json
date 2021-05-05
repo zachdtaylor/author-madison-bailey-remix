@@ -1,9 +1,9 @@
 {
-  "version": "94246e82",
+  "version": "32158f15",
   "entry": {
-    "module": "/build/entry.client-3DF6Y27A.js",
+    "module": "/build/entry.client-Y2TDXC36.js",
     "imports": [
-      "/build/_shared/chunk-5MZXNG25.js",
+      "/build/_shared/chunk-76CNRRGH.js",
       "/build/_shared/chunk-JM6RBIBN.js",
       "/build/_shared/chunk-DOM5QJLA.js"
     ]
@@ -12,7 +12,7 @@
     "root": {
       "id": "root",
       "path": "/",
-      "module": "/build/root-O3RM4IXM.js",
+      "module": "/build/root-AGCS7ZDZ.js",
       "hasAction": false,
       "hasLoader": true
     },
@@ -30,7 +30,7 @@
       "parentId": "root",
       "path": "/",
       "caseSensitive": false,
-      "module": "/build/routes/index-LUWZK6GA.js",
+      "module": "/build/routes/index-C6O6WY3H.js",
       "imports": [
         "/build/_shared/chunk-743MYCOQ.js"
       ],
@@ -42,16 +42,33 @@
       "parentId": "routes/index",
       "path": "blog",
       "caseSensitive": false,
-      "module": "/build/routes/index/blog-O2HZNI4O.js",
+      "module": "/build/routes/index/blog-JC4WYFDQ.js",
+      "imports": [
+        "/build/_shared/chunk-SP3YS6VA.js",
+        "/build/_shared/chunk-2O557GQL.js"
+      ],
       "hasAction": false,
-      "hasLoader": false
+      "hasLoader": true
+    },
+    "routes/index/blog.$id": {
+      "id": "routes/index/blog.$id",
+      "parentId": "routes/index",
+      "path": "blog/:id",
+      "caseSensitive": false,
+      "module": "/build/routes/index/blog.$id-TQLZPEZU.js",
+      "imports": [
+        "/build/_shared/chunk-SP3YS6VA.js",
+        "/build/_shared/chunk-2O557GQL.js"
+      ],
+      "hasAction": false,
+      "hasLoader": true
     },
     "routes/index/books": {
       "id": "routes/index/books",
       "parentId": "routes/index",
       "path": "books",
       "caseSensitive": false,
-      "module": "/build/routes/index/books-M2HZT4BA.js",
+      "module": "/build/routes/index/books-4KPTPYVZ.js",
       "imports": [
         "/build/_shared/chunk-2O557GQL.js"
       ],
@@ -63,7 +80,7 @@
       "parentId": "routes/index/books",
       "path": ":id",
       "caseSensitive": false,
-      "module": "/build/routes/index/books/$id-PJC36FZX.js",
+      "module": "/build/routes/index/books/$id-2KQLQR6H.js",
       "hasAction": false,
       "hasLoader": true
     },
@@ -84,7 +101,7 @@
       "parentId": "routes/index",
       "path": "/",
       "caseSensitive": false,
-      "module": "/build/routes/index/index-HDVMB2VF.js",
+      "module": "/build/routes/index/index-QXSB6BEQ.js",
       "imports": [
         "/build/_shared/chunk-2O557GQL.js"
       ],
@@ -92,5 +109,5 @@
       "hasLoader": true
     }
   },
-  "url": "/build/manifest-94246E82.js"
+  "url": "/build/manifest-32158F15.js"
 }

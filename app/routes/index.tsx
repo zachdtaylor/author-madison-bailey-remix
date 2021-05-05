@@ -25,7 +25,7 @@ function NavBar() {
       <div className="flex flex-row justify-between shadow-md md:hidden">
         <img
           src="/madison-bailey-logo.png"
-          alt="Madison Bailey Logo"
+          alt="Madison Bailey's Square Logo"
           className="max-h-24"
         />
         <div
@@ -51,6 +51,7 @@ function NavBar() {
         </NavBarGroup>
         <img
           src="/madison-bailey-logo-rectangle.png"
+          alt="Madison Bailey's Rectangle Logo"
           className="hidden my-4 md:w-48 md:inline"
         />
         <NavBarGroup>
@@ -70,16 +71,16 @@ interface NavBarItemProps {
 
 function NavBarItem({ to, exact, children }: NavBarItemProps) {
   return (
-    <NavLink
-      to={to}
-      className="w-full text-xl"
-      activeClassName="text-primary-dark"
-      end={exact}
-    >
-      <li className="py-4 border-b-2 md:mx-4 md:py-2 md:border-b-0 hover:text-primary-dark transition duration-200 ease-in-out">
+    <li className="py-4 border-b-2 md:mx-4 md:py-2 md:border-b-0 hover:text-primary-dark transition duration-200 ease-in-out">
+      <NavLink
+        to={to}
+        className="w-full text-xl"
+        activeClassName="text-primary-dark"
+        end={exact}
+      >
         {children}
-      </li>
-    </NavLink>
+      </NavLink>
+    </li>
   );
 }
 

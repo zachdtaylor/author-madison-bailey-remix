@@ -75,6 +75,7 @@ __export(root_exports, {
   loader: () => loader
 });
 var import_remix2 = __toModule(require("remix"));
+var import_remix3 = __toModule(require("remix"));
 var import_react_router_dom = __toModule(require("react-router-dom"));
 
 // app/styles/global.css
@@ -88,6 +89,11 @@ var loader = async () => {
   return {date: new Date()};
 };
 function Document({children}) {
+  const matches = (0, import_remix2.useMatches)();
+  const includeScripts = matches.some((match) => {
+    var _a;
+    return (_a = match.handle) == null ? void 0 : _a.hydrate;
+  });
   return /* @__PURE__ */ React.createElement("html", {
     lang: "en"
   }, /* @__PURE__ */ React.createElement("head", null, /* @__PURE__ */ React.createElement("meta", {
@@ -99,10 +105,10 @@ function Document({children}) {
     rel: "icon",
     href: "/favicon.png",
     type: "image/png"
-  }), /* @__PURE__ */ React.createElement(import_remix2.Meta, null), /* @__PURE__ */ React.createElement(import_remix2.Links, null)), /* @__PURE__ */ React.createElement("body", null, children, /* @__PURE__ */ React.createElement(import_remix2.Scripts, null), process.env.NODE_ENV === "development" && /* @__PURE__ */ React.createElement(import_remix2.LiveReload, null)));
+  }), /* @__PURE__ */ React.createElement(import_remix3.Meta, null), /* @__PURE__ */ React.createElement(import_remix3.Links, null)), /* @__PURE__ */ React.createElement("body", null, children, includeScripts && /* @__PURE__ */ React.createElement(import_remix3.Scripts, null), process.env.NODE_ENV === "development" && /* @__PURE__ */ React.createElement(import_remix3.LiveReload, null)));
 }
 function App() {
-  let data = (0, import_remix2.useRouteData)();
+  let data = (0, import_remix3.useRouteData)();
   return /* @__PURE__ */ React.createElement(Document, null, /* @__PURE__ */ React.createElement(import_react_router_dom.Outlet, null), /* @__PURE__ */ React.createElement("footer", null, /* @__PURE__ */ React.createElement("p", null, "This page was rendered at ", data.date.toLocaleString())));
 }
 function ErrorBoundary({error}) {
@@ -149,7 +155,7 @@ function NavBar() {
     className: "flex flex-row justify-between shadow-md md:hidden"
   }, /* @__PURE__ */ import_react.default.createElement("img", {
     src: "/madison-bailey-logo.png",
-    alt: "Madison Bailey Logo",
+    alt: "Madison Bailey's Square Logo",
     className: "max-h-24"
   }), /* @__PURE__ */ import_react.default.createElement("div", {
     className: "w-24 flex items-center",
@@ -166,6 +172,7 @@ function NavBar() {
     to: "books"
   }, "Books")), /* @__PURE__ */ import_react.default.createElement("img", {
     src: "/madison-bailey-logo-rectangle.png",
+    alt: "Madison Bailey's Rectangle Logo",
     className: "hidden my-4 md:w-48 md:inline"
   }), /* @__PURE__ */ import_react.default.createElement(NavBarGroup, null, /* @__PURE__ */ import_react.default.createElement(NavBarItem, {
     to: "contact"
@@ -174,13 +181,13 @@ function NavBar() {
   }, "Blog"))));
 }
 function NavBarItem({to, exact, children}) {
-  return /* @__PURE__ */ import_react.default.createElement(import_react_router_dom2.NavLink, {
+  return /* @__PURE__ */ import_react.default.createElement("li", {
+    className: "py-4 border-b-2 md:mx-4 md:py-2 md:border-b-0 hover:text-primary-dark transition duration-200 ease-in-out"
+  }, /* @__PURE__ */ import_react.default.createElement(import_react_router_dom2.NavLink, {
     to,
     className: "w-full text-xl",
     activeClassName: "text-primary-dark",
     end: exact
-  }, /* @__PURE__ */ import_react.default.createElement("li", {
-    className: "py-4 border-b-2 md:mx-4 md:py-2 md:border-b-0 hover:text-primary-dark transition duration-200 ease-in-out"
   }, children));
 }
 function NavBarGroup({children}) {
@@ -204,24 +211,15 @@ function MenuIcon() {
   }));
 }
 
-// route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/routes/index/blog.tsx
-var blog_exports = {};
-
-// route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/routes/index/books.tsx
-var books_exports = {};
-__export(books_exports, {
-  default: () => Books,
-  links: () => links3,
+// route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/routes/index/blog.$id.tsx
+var blog_id_exports = {};
+__export(blog_id_exports, {
+  default: () => BlogPost,
   loader: () => loader2,
   meta: () => meta2
 });
 var import_react3 = __toModule(require("react"));
-var import_remix3 = __toModule(require("remix"));
-var import_react_router_dom3 = __toModule(require("react-router-dom"));
-var import_react_clamp_lines = __toModule(require("react-clamp-lines"));
-
-// app/styles/books.css
-var books_default = "/build/_assets/books-5FYJU3DU.css";
+var import_remix4 = __toModule(require("remix"));
 
 // app/utils/contentful-client.ts
 function contentfulClient(query, variables) {
@@ -278,9 +276,44 @@ var book = `
   query($id: String!) {
     book(id: $id) {
       ...BookData
+      amazonPurchaseLink
+      barnesAndNoblePurchaseLink
+      appleBooksPurchaseLink
+      googlePlayBooksPurchaseLink
+      koboPurchaseLink
     }
   }
   ${bookFragment}
+`;
+var blogPostFragment = `
+  fragment BlogPostData on BlogPost {
+    sys {
+      id
+    }
+    title
+    postDate
+    body {
+      json
+    }
+  }
+`;
+var allBlogPosts = `
+  query {
+    posts: blogPostCollection(order: postDate_DESC) {
+      items {
+        ...BlogPostData
+      }
+    }
+  }
+  ${blogPostFragment}
+`;
+var blogPost = `
+  query($id: String!) {
+    blogPost(id: $id) {
+      ...BlogPostData
+    }
+  }
+  ${blogPostFragment}
 `;
 
 // app/components/lib.tsx
@@ -315,8 +348,96 @@ function Margin({children}) {
   }, children);
 }
 
+// app/utils/misc.ts
+function fullDateString(dateStr) {
+  const date = new Date(dateStr);
+  return date.toLocaleString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC"
+  });
+}
+
+// route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/routes/index/blog.$id.tsx
+var meta2 = ({data: post}) => {
+  return {
+    title: `${post.title} | Blog | Author Madison Bailey`,
+    description: post.body.json.content[0].content[0].value
+  };
+};
+var loader2 = async ({params}) => {
+  const res = await contentfulClient(blogPost, {id: params.id});
+  return res.data.blogPost;
+};
+function BlogPost() {
+  const post = (0, import_remix4.useRouteData)();
+  return /* @__PURE__ */ import_react3.default.createElement(Margin, null, /* @__PURE__ */ import_react3.default.createElement("h1", {
+    className: "text-3xl font-bold"
+  }, post.title), /* @__PURE__ */ import_react3.default.createElement("p", {
+    className: "my-2"
+  }, "Posted ", fullDateString(post.postDate)), /* @__PURE__ */ import_react3.default.createElement(RichText, {
+    richTextResponse: post.body
+  }));
+}
+
+// route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/routes/index/blog.tsx
+var blog_exports = {};
+__export(blog_exports, {
+  default: () => Blog,
+  loader: () => loader3,
+  meta: () => meta3
+});
+var import_remix5 = __toModule(require("remix"));
+var import_react_router_dom3 = __toModule(require("react-router-dom"));
+var meta3 = () => {
+  return {
+    title: "Blog | Author Madison Bailey",
+    description: "Check out Madison Bailey's blog posts"
+  };
+};
+var loader3 = async () => {
+  const res = await contentfulClient(allBlogPosts);
+  return res.data.posts.items;
+};
+function Blog() {
+  const posts = (0, import_remix5.useRouteData)();
+  return /* @__PURE__ */ React.createElement(Margin, null, posts.map((post) => /* @__PURE__ */ React.createElement(BlogPostPreview, {
+    key: post.sys.id,
+    blogPost: post
+  })));
+}
+var BlogPostPreview = ({blogPost: blogPost2}) => /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement(import_react_router_dom3.Link, {
+  to: blogPost2.sys.id
+}, /* @__PURE__ */ React.createElement("h1", {
+  className: "text-primary-dark text-3xl hover:text-primary transition duration-500 ease-in-out py-3 inline-block"
+}, blogPost2.title)), /* @__PURE__ */ React.createElement("p", null, fullDateString(blogPost2.postDate)), /* @__PURE__ */ React.createElement(RichText, {
+  richTextResponse: blogPost2.body,
+  maxElements: 1
+}));
+
 // route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/routes/index/books.tsx
-var meta2 = () => {
+var books_exports = {};
+__export(books_exports, {
+  default: () => Books,
+  handle: () => handle,
+  links: () => links3,
+  loader: () => loader4,
+  meta: () => meta4
+});
+var import_react4 = __toModule(require("react"));
+var import_remix6 = __toModule(require("remix"));
+var import_react_router_dom4 = __toModule(require("react-router-dom"));
+var import_react_clamp_lines = __toModule(require("react-clamp-lines"));
+
+// app/styles/books.css
+var books_default = "/build/_assets/books-5FYJU3DU.css";
+
+// route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/routes/index/books.tsx
+var handle = {
+  hydrate: true
+};
+var meta4 = () => {
   return {
     title: "Books | Author Madison Bailey",
     description: "Check out Madison Bailey's books!"
@@ -325,18 +446,18 @@ var meta2 = () => {
 var links3 = () => {
   return [{rel: "stylesheet", href: books_default}];
 };
-var loader2 = async () => {
+var loader4 = async () => {
   const res = await contentfulClient(allBooks);
   return res.data.books.items;
 };
 function Books() {
-  const books = (0, import_remix3.useRouteData)();
-  return /* @__PURE__ */ import_react3.default.createElement(Margin, null, /* @__PURE__ */ import_react3.default.createElement("div", {
+  const books = (0, import_remix6.useRouteData)();
+  return /* @__PURE__ */ import_react4.default.createElement(Margin, null, /* @__PURE__ */ import_react4.default.createElement("div", {
     className: "books-grid"
-  }, books.map((book2) => /* @__PURE__ */ import_react3.default.createElement(BookPreviewCard, {
+  }, books.map((book2) => /* @__PURE__ */ import_react4.default.createElement(BookPreviewCard, {
     key: book2.sys.id,
     book: book2
-  }))), /* @__PURE__ */ import_react3.default.createElement(import_react_router_dom3.Outlet, null));
+  }))), /* @__PURE__ */ import_react4.default.createElement(import_react_router_dom4.Outlet, null));
 }
 function getLines(size) {
   if (size >= 1250) {
@@ -356,8 +477,8 @@ function getLines(size) {
   }
 }
 var BookPreviewCard = ({book: book2}) => {
-  const [previewLines, setPreviewLines] = import_react3.default.useState(typeof window !== "undefined" ? getLines(window.innerWidth) : 4);
-  import_react3.default.useEffect(() => {
+  const [previewLines, setPreviewLines] = import_react4.default.useState(typeof window !== "undefined" ? getLines(window.innerWidth) : 4);
+  import_react4.default.useEffect(() => {
     const handleResize = () => {
       setPreviewLines(getLines(window.innerWidth));
     };
@@ -365,22 +486,22 @@ var BookPreviewCard = ({book: book2}) => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   });
-  return /* @__PURE__ */ import_react3.default.createElement(import_react_router_dom3.Link, {
+  return /* @__PURE__ */ import_react4.default.createElement(import_react_router_dom4.Link, {
     to: book2.sys.id,
     className: "book-link",
     replace: true
-  }, /* @__PURE__ */ import_react3.default.createElement("div", {
+  }, /* @__PURE__ */ import_react4.default.createElement("div", {
     className: "grid grid-cols-3 grid-flow-col gap-3 "
-  }, /* @__PURE__ */ import_react3.default.createElement("div", {
+  }, /* @__PURE__ */ import_react4.default.createElement("div", {
     className: "row-span-5"
-  }, /* @__PURE__ */ import_react3.default.createElement("img", {
+  }, /* @__PURE__ */ import_react4.default.createElement("img", {
     src: book2.coverArt.url,
     alt: book2.coverArt.title
-  })), /* @__PURE__ */ import_react3.default.createElement("div", {
+  })), /* @__PURE__ */ import_react4.default.createElement("div", {
     className: "col-span-2 row-span-4 pr-2"
-  }, /* @__PURE__ */ import_react3.default.createElement("h1", {
+  }, /* @__PURE__ */ import_react4.default.createElement("h1", {
     className: "text-2xl"
-  }, book2.title), /* @__PURE__ */ import_react3.default.createElement(import_react_clamp_lines.default, {
+  }, book2.title), /* @__PURE__ */ import_react4.default.createElement(import_react_clamp_lines.default, {
     id: book2.sys.id,
     className: "text-sm",
     text: book2.description.json.content[0].content[0].value,
@@ -395,59 +516,104 @@ var BookPreviewCard = ({book: book2}) => {
 var id_exports = {};
 __export(id_exports, {
   default: () => Book,
-  loader: () => loader3,
-  meta: () => meta3
+  loader: () => loader5,
+  meta: () => meta5
 });
-var import_react4 = __toModule(require("react"));
-var import_remix4 = __toModule(require("remix"));
-var meta3 = ({data: book2}) => {
+var import_react5 = __toModule(require("react"));
+var import_remix7 = __toModule(require("remix"));
+var meta5 = ({data: book2}) => {
   return {
     title: `${book2.title} | Books | Author Madison Bailey`,
     description: book2.description.json.content[0].content[0].value
   };
 };
-var loader3 = async ({params}) => {
+var loader5 = async ({params}) => {
   const res = await contentfulClient(book, {id: params.id});
   return res.data.book;
 };
 function Book() {
-  const [scrolled, setScrolled] = import_react4.default.useState(false);
-  const book2 = (0, import_remix4.useRouteData)();
-  return /* @__PURE__ */ import_react4.default.createElement("div", {
+  const [scrolled, setScrolled] = import_react5.default.useState(false);
+  const book2 = (0, import_remix7.useRouteData)();
+  return /* @__PURE__ */ import_react5.default.createElement("div", {
     className: "absolute z-10 top-0 left-0 w-full h-full py-6 px-6 lg:px-32 bg-gray-600 bg-opacity-50"
-  }, /* @__PURE__ */ import_react4.default.createElement("div", {
+  }, /* @__PURE__ */ import_react5.default.createElement("div", {
     className: "m-auto w-full h-full bg-white rounded-md overflow-hidden"
-  }, /* @__PURE__ */ import_react4.default.createElement("div", {
+  }, /* @__PURE__ */ import_react5.default.createElement("div", {
     className: `p-3 ${scrolled && "shadow-md"}`
-  }, /* @__PURE__ */ import_react4.default.createElement(CloseButton, null)), /* @__PURE__ */ import_react4.default.createElement("div", {
+  }, /* @__PURE__ */ import_react5.default.createElement(CloseButton, null)), /* @__PURE__ */ import_react5.default.createElement("div", {
     onScroll: (event) => setScrolled(event.target.scrollTop !== 0),
-    className: "mx-8 mb-3 h-full sm:grid sm:grid-cols-2 sm:gap-4 md:grid-cols-3 overflow-scroll"
-  }, /* @__PURE__ */ import_react4.default.createElement("div", null, /* @__PURE__ */ import_react4.default.createElement("div", {
+    className: "mx-8 h-full sm:grid sm:grid-cols-2 sm:gap-4 md:grid-cols-3 overflow-scroll"
+  }, /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("div", {
     className: "border-gray-700 rounded-md shadow-lg"
-  }, /* @__PURE__ */ import_react4.default.createElement("img", {
+  }, /* @__PURE__ */ import_react5.default.createElement("img", {
     src: book2.coverArt.url,
     alt: book2.coverArt.title
-  }))), /* @__PURE__ */ import_react4.default.createElement("div", {
+  }))), /* @__PURE__ */ import_react5.default.createElement("div", {
     className: "p-3 pt-5 sm:pt-0 md:col-span-2"
-  }, /* @__PURE__ */ import_react4.default.createElement("h1", {
+  }, /* @__PURE__ */ import_react5.default.createElement("h1", {
     className: "text-2xl font-bold"
-  }, book2.title), /* @__PURE__ */ import_react4.default.createElement(RichText, {
+  }, book2.title), /* @__PURE__ */ import_react5.default.createElement(RichText, {
     richTextResponse: book2.description
-  }), /* @__PURE__ */ import_react4.default.createElement("hr", {
+  }), /* @__PURE__ */ import_react5.default.createElement("hr", {
+    className: "my-5"
+  }), /* @__PURE__ */ import_react5.default.createElement(PurchaseLinks, __objSpread({}, book2)), /* @__PURE__ */ import_react5.default.createElement("hr", {
+    className: "my-5"
+  }), /* @__PURE__ */ import_react5.default.createElement("hr", {
     className: "my-5"
   })))));
 }
+var PurchaseLink = ({link, imgURL, altText}) => /* @__PURE__ */ import_react5.default.createElement("a", {
+  href: link,
+  className: "self-center"
+}, /* @__PURE__ */ import_react5.default.createElement("img", {
+  src: imgURL,
+  alt: altText,
+  className: "max-h-12"
+}));
+var PurchaseLinks = ({
+  amazonPurchaseLink,
+  appleBooksPurchaseLink,
+  barnesAndNoblePurchaseLink,
+  googlePlayBooksPurchaseLink,
+  koboPurchaseLink
+}) => {
+  return /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("h2", {
+    className: "text-xl mb-5"
+  }, "Buy it now"), /* @__PURE__ */ import_react5.default.createElement("div", {
+    className: "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-3"
+  }, /* @__PURE__ */ import_react5.default.createElement(PurchaseLink, {
+    link: amazonPurchaseLink,
+    imgURL: "/amazon-icon.png",
+    altText: "Buy on Amazon"
+  }), /* @__PURE__ */ import_react5.default.createElement(PurchaseLink, {
+    link: appleBooksPurchaseLink,
+    imgURL: "/apple-books-icon.svg",
+    altText: "Get it on Apple Books"
+  }), /* @__PURE__ */ import_react5.default.createElement(PurchaseLink, {
+    link: barnesAndNoblePurchaseLink,
+    imgURL: "/barnes-and-noble-icon.png",
+    altText: "Buy on Barnes and Noble"
+  }), /* @__PURE__ */ import_react5.default.createElement(PurchaseLink, {
+    link: googlePlayBooksPurchaseLink,
+    imgURL: "/google-play-books-icon.png",
+    altText: "Buy on Google Play Books"
+  }), /* @__PURE__ */ import_react5.default.createElement(PurchaseLink, {
+    link: koboPurchaseLink,
+    imgURL: "/kobo-icon.jpg",
+    altText: "Buy on Kobo"
+  })));
+};
 function CloseButton() {
-  return /* @__PURE__ */ import_react4.default.createElement(import_remix4.Link, {
+  return /* @__PURE__ */ import_react5.default.createElement(import_remix7.Link, {
     to: "..",
     replace: true
-  }, /* @__PURE__ */ import_react4.default.createElement("svg", {
+  }, /* @__PURE__ */ import_react5.default.createElement("svg", {
     xmlns: "http://www.w3.org/2000/svg",
     className: "h-6 w-6",
     fill: "none",
     viewBox: "0 0 24 24",
     stroke: "currentColor"
-  }, /* @__PURE__ */ import_react4.default.createElement("path", {
+  }, /* @__PURE__ */ import_react5.default.createElement("path", {
     strokeLinecap: "round",
     strokeLinejoin: "round",
     strokeWidth: "2",
@@ -459,9 +625,9 @@ function CloseButton() {
 var contact_exports = {};
 __export(contact_exports, {
   default: () => Contact,
-  meta: () => meta4
+  meta: () => meta6
 });
-var meta4 = () => {
+var meta6 = () => {
   return {
     title: "Contact | Author Madison Bailey",
     description: "Contact Madison Bailey at her email: hello@authormadisonbailey.com"
@@ -480,15 +646,15 @@ var index_exports = {};
 __export(index_exports, {
   default: () => Index2,
   links: () => links4,
-  loader: () => loader4,
-  meta: () => meta5
+  loader: () => loader6,
+  meta: () => meta7
 });
-var import_remix5 = __toModule(require("remix"));
+var import_remix8 = __toModule(require("remix"));
 
 // app/components/button.tsx
-var import_react_router_dom4 = __toModule(require("react-router-dom"));
-function Link3({to, children, extraMargin}) {
-  return /* @__PURE__ */ React.createElement(import_react_router_dom4.Link, {
+var import_react_router_dom5 = __toModule(require("react-router-dom"));
+function Link5({to, children, extraMargin}) {
+  return /* @__PURE__ */ React.createElement(import_react_router_dom5.Link, {
     to,
     className: `inline-block bg-primary-dark hover:bg-primary ease-in-out transition duration-200 text-white py-3 px-4 rounded shadow-md
         ${extraMargin && "mt-3 mb-5 md:my-3"}`
@@ -499,7 +665,7 @@ function Link3({to, children, extraMargin}) {
 var styles_default = "/build/_assets/index-JEUFNT4K.css";
 
 // route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/routes/index/index.tsx
-var meta5 = () => {
+var meta7 = () => {
   return {
     title: "Home | Author Madison Bailey",
     description: "Clean Romances for the Hopeful Romantic"
@@ -511,7 +677,7 @@ var links4 = () => {
     {rel: "stylesheet", href: app_default}
   ];
 };
-var loader4 = async () => {
+var loader6 = async () => {
   const res = await contentfulClient(latestBookRelease);
   return res.data.books.items[0];
 };
@@ -534,12 +700,12 @@ function HomeBanner() {
     className: "text-primary-dark"
   }, " Hopeful Romantic")), /* @__PURE__ */ React.createElement("div", {
     className: "mt-5"
-  }, /* @__PURE__ */ React.createElement(Link3, {
+  }, /* @__PURE__ */ React.createElement(Link5, {
     to: "books"
   }, "Check out my books")))));
 }
 var NewestRelease = () => {
-  const data = (0, import_remix5.useRouteData)();
+  const data = (0, import_remix8.useRouteData)();
   return /* @__PURE__ */ React.createElement("div", {
     className: "px-6 py-2"
   }, /* @__PURE__ */ React.createElement("div", {
@@ -563,10 +729,10 @@ var NewestRelease = () => {
     maxElements: 2
   }), /* @__PURE__ */ React.createElement("div", {
     className: "text-right md:text-left"
-  }, /* @__PURE__ */ React.createElement(Link3, {
+  }, /* @__PURE__ */ React.createElement(Link5, {
     to: `books/${data.sys.id}`,
     extraMargin: true
-  }, "Read More"))))));
+  }, "Read More about ", data.title))))));
 };
 
 // <stdin>
@@ -593,6 +759,13 @@ var routes = {
     path: "/",
     caseSensitive: false,
     module: routes_exports
+  },
+  "routes/index/blog.$id": {
+    id: "routes/index/blog.$id",
+    parentId: "routes/index",
+    path: "blog/:id",
+    caseSensitive: false,
+    module: blog_id_exports
   },
   "routes/index/blog": {
     id: "routes/index/blog",
