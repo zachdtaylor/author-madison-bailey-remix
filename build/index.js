@@ -118,29 +118,49 @@ function ErrorBoundary({error}) {
 var __exports = {};
 __export(__exports, {
   default: () => FourOhFour,
+  links: () => links2,
   meta: () => meta
 });
+
+// app/components/button.tsx
+var import_react_router_dom2 = __toModule(require("react-router-dom"));
+function Link({to, children, extraMargin}) {
+  return /* @__PURE__ */ React.createElement(import_react_router_dom2.Link, {
+    to,
+    className: `inline-block bg-primary-dark hover:bg-primary ease-in-out transition duration-200 text-white py-3 px-4 rounded shadow-md
+        ${extraMargin && "mt-3 mb-5 md:my-3"}`
+  }, children);
+}
+
+// app/styles/app.css
+var app_default = "/build/_assets/app-SKIFVIF3.css";
+
+// route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/routes/404.tsx
+var links2 = () => {
+  return [{rel: "stylesheet", href: app_default}];
+};
 var meta = () => {
-  return {title: "Ain't nothing here"};
+  return {title: "Not found"};
 };
 function FourOhFour() {
-  return /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("h1", null, "404"));
+  return /* @__PURE__ */ React.createElement("div", {
+    className: "p-4"
+  }, /* @__PURE__ */ React.createElement("h1", {
+    className: "text-2xl font-bold mb-4"
+  }, "Whoops... this page doesn't exist!"), /* @__PURE__ */ React.createElement(Link, {
+    to: ".."
+  }, "Go Back"));
 }
 
 // route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/routes/index.tsx
 var routes_exports = {};
 __export(routes_exports, {
   default: () => Index,
-  links: () => links2
+  links: () => links3
 });
 var import_react = __toModule(require("react"));
-var import_react_router_dom2 = __toModule(require("react-router-dom"));
-
-// app/styles/app.css
-var app_default = "/build/_assets/app-SKIFVIF3.css";
-
-// route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/routes/index.tsx
-var links2 = () => {
+var import_react_router_dom3 = __toModule(require("react-router-dom"));
+var links3 = () => {
   return [{rel: "stylesheet", href: app_default}];
 };
 function Index() {
@@ -148,7 +168,7 @@ function Index() {
     className: "flex flex-col h-full"
   }, /* @__PURE__ */ import_react.default.createElement(NavBar, null), /* @__PURE__ */ import_react.default.createElement("main", {
     className: "flex-auto mb-4"
-  }, /* @__PURE__ */ import_react.default.createElement(import_react_router_dom2.Outlet, null)), /* @__PURE__ */ import_react.default.createElement(Footer, {
+  }, /* @__PURE__ */ import_react.default.createElement(import_react_router_dom3.Outlet, null)), /* @__PURE__ */ import_react.default.createElement(Footer, {
     className: "flex-shrink"
   }));
 }
@@ -188,7 +208,7 @@ function NavBar() {
 function NavBarItem({to, exact, children}) {
   return /* @__PURE__ */ import_react.default.createElement("li", {
     className: "py-4 border-b-2 md:mx-4 md:py-2 md:border-b-0 hover:text-primary-dark transition duration-200 ease-in-out"
-  }, /* @__PURE__ */ import_react.default.createElement(import_react_router_dom2.NavLink, {
+  }, /* @__PURE__ */ import_react.default.createElement(import_react_router_dom3.NavLink, {
     to,
     className: "w-full text-xl",
     activeClassName: "text-primary-dark",
@@ -410,7 +430,7 @@ __export(blog_exports, {
   meta: () => meta3
 });
 var import_remix5 = __toModule(require("remix"));
-var import_react_router_dom3 = __toModule(require("react-router-dom"));
+var import_react_router_dom4 = __toModule(require("react-router-dom"));
 var meta3 = () => {
   return {
     title: "Blog | Author Madison Bailey",
@@ -428,7 +448,7 @@ function Blog() {
     blogPost: post
   })));
 }
-var BlogPostPreview = ({blogPost: blogPost2}) => /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement(import_react_router_dom3.Link, {
+var BlogPostPreview = ({blogPost: blogPost2}) => /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement(import_react_router_dom4.Link, {
   to: blogPost2.sys.id
 }, /* @__PURE__ */ React.createElement("h1", {
   className: "text-primary-dark text-3xl hover:text-primary transition duration-500 ease-in-out py-3 inline-block"
@@ -442,13 +462,13 @@ var books_exports = {};
 __export(books_exports, {
   default: () => Books,
   handle: () => handle,
-  links: () => links3,
+  links: () => links4,
   loader: () => loader4,
   meta: () => meta4
 });
 var import_react4 = __toModule(require("react"));
 var import_remix6 = __toModule(require("remix"));
-var import_react_router_dom4 = __toModule(require("react-router-dom"));
+var import_react_router_dom5 = __toModule(require("react-router-dom"));
 var import_react_clamp_lines = __toModule(require("react-clamp-lines"));
 
 // app/styles/books.css
@@ -464,7 +484,7 @@ var meta4 = () => {
     description: "Check out Madison Bailey's books!"
   };
 };
-var links3 = () => {
+var links4 = () => {
   return [{rel: "stylesheet", href: books_default}];
 };
 var loader4 = async () => {
@@ -478,7 +498,7 @@ function Books() {
   }, books.map((book2) => /* @__PURE__ */ import_react4.default.createElement(BookPreviewCard, {
     key: book2.sys.id,
     book: book2
-  }))), /* @__PURE__ */ import_react4.default.createElement(import_react_router_dom4.Outlet, null));
+  }))), /* @__PURE__ */ import_react4.default.createElement(import_react_router_dom5.Outlet, null));
 }
 function getLines(size) {
   if (size >= 1250) {
@@ -507,7 +527,7 @@ var BookPreviewCard = ({book: book2}) => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   });
-  return /* @__PURE__ */ import_react4.default.createElement(import_react_router_dom4.Link, {
+  return /* @__PURE__ */ import_react4.default.createElement(import_react_router_dom5.Link, {
     to: book2.sys.id,
     className: "book-link",
     replace: true
@@ -666,21 +686,11 @@ function Contact() {
 var index_exports = {};
 __export(index_exports, {
   default: () => Index2,
-  links: () => links4,
+  links: () => links5,
   loader: () => loader6,
   meta: () => meta7
 });
 var import_remix8 = __toModule(require("remix"));
-
-// app/components/button.tsx
-var import_react_router_dom5 = __toModule(require("react-router-dom"));
-function Link5({to, children, extraMargin}) {
-  return /* @__PURE__ */ React.createElement(import_react_router_dom5.Link, {
-    to,
-    className: `inline-block bg-primary-dark hover:bg-primary ease-in-out transition duration-200 text-white py-3 px-4 rounded shadow-md
-        ${extraMargin && "mt-3 mb-5 md:my-3"}`
-  }, children);
-}
 
 // app/styles/index.css
 var styles_default = "/build/_assets/index-JEUFNT4K.css";
@@ -692,7 +702,7 @@ var meta7 = () => {
     description: "Clean Romances for the Hopeful Romantic"
   };
 };
-var links4 = () => {
+var links5 = () => {
   return [
     {rel: "stylesheet", href: styles_default},
     {rel: "stylesheet", href: app_default}
@@ -721,7 +731,7 @@ function HomeBanner() {
     className: "text-primary-dark"
   }, " Hopeful Romantic")), /* @__PURE__ */ React.createElement("div", {
     className: "mt-5"
-  }, /* @__PURE__ */ React.createElement(Link5, {
+  }, /* @__PURE__ */ React.createElement(Link, {
     to: "books"
   }, "Check out my books")))));
 }
@@ -750,7 +760,7 @@ var NewestRelease = () => {
     maxElements: 2
   }), /* @__PURE__ */ React.createElement("div", {
     className: "text-right md:text-left"
-  }, /* @__PURE__ */ React.createElement(Link5, {
+  }, /* @__PURE__ */ React.createElement(Link, {
     to: `books/${data.sys.id}`,
     extraMargin: true
   }, "Read More about ", data.title))))), /* @__PURE__ */ React.createElement("div", {
