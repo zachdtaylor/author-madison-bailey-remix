@@ -84,6 +84,9 @@ const NewestRelease = () => {
           </div>
         </div>
       </div>
+      <div className="pt-8 pb-5">
+        <hr />
+      </div>
     </div>
   );
 };

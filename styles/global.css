@@ -12,6 +12,10 @@
   src: url("/Timeless-Bold.ttf");
 }
 
+html {
+  height: 100%;
+}
+
 body {
   font-family: Timeless !important;
   height: 100%;

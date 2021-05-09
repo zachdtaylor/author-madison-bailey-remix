@@ -79,7 +79,7 @@ var import_remix3 = __toModule(require("remix"));
 var import_react_router_dom = __toModule(require("react-router-dom"));
 
 // app/styles/global.css
-var global_default = "/build/_assets/global-S4B5HPEC.css";
+var global_default = "/build/_assets/global-JIOXADQM.css";
 
 // route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/root.tsx
 var links = () => {
@@ -108,8 +108,7 @@ function Document({children}) {
   }), /* @__PURE__ */ React.createElement(import_remix3.Meta, null), /* @__PURE__ */ React.createElement(import_remix3.Links, null)), /* @__PURE__ */ React.createElement("body", null, children, includeScripts && /* @__PURE__ */ React.createElement(import_remix3.Scripts, null), process.env.NODE_ENV === "development" && /* @__PURE__ */ React.createElement(import_remix3.LiveReload, null)));
 }
 function App() {
-  let data = (0, import_remix3.useRouteData)();
-  return /* @__PURE__ */ React.createElement(Document, null, /* @__PURE__ */ React.createElement(import_react_router_dom.Outlet, null), /* @__PURE__ */ React.createElement("footer", null, /* @__PURE__ */ React.createElement("p", null, "This page was rendered at ", data.date.toLocaleString())));
+  return /* @__PURE__ */ React.createElement(Document, null, /* @__PURE__ */ React.createElement(import_react_router_dom.Outlet, null));
 }
 function ErrorBoundary({error}) {
   return /* @__PURE__ */ React.createElement(Document, null, /* @__PURE__ */ React.createElement("h1", null, "App Error"), /* @__PURE__ */ React.createElement("pre", null, error.message), /* @__PURE__ */ React.createElement("p", null, "Yikes... something went wrong. Try refreshing the app."));
@@ -145,7 +144,13 @@ var links2 = () => {
   return [{rel: "stylesheet", href: app_default}];
 };
 function Index() {
-  return /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement(NavBar, null), /* @__PURE__ */ import_react.default.createElement("main", null, /* @__PURE__ */ import_react.default.createElement(import_react_router_dom2.Outlet, null)));
+  return /* @__PURE__ */ import_react.default.createElement("div", {
+    className: "flex flex-col h-full"
+  }, /* @__PURE__ */ import_react.default.createElement(NavBar, null), /* @__PURE__ */ import_react.default.createElement("main", {
+    className: "flex-auto mb-4"
+  }, /* @__PURE__ */ import_react.default.createElement(import_react_router_dom2.Outlet, null)), /* @__PURE__ */ import_react.default.createElement(Footer, {
+    className: "flex-shrink"
+  }));
 }
 function NavBar() {
   const [mobileMenuActive, setMobileMenuActive] = import_react.default.useState(false);
@@ -209,6 +214,22 @@ function MenuIcon() {
     strokeWidth: 2,
     d: "M4 6h16M4 12h16M4 18h16"
   }));
+}
+function Footer({className}) {
+  return /* @__PURE__ */ import_react.default.createElement("footer", {
+    className: `text-center py-12 px-3 bg-gray-300 text-gray-800 ${className}`
+  }, /* @__PURE__ */ import_react.default.createElement("p", {
+    className: "mb-2"
+  }, /* @__PURE__ */ import_react.default.createElement("a", {
+    href: "mailto:authormadisonbailey@gmail.com",
+    className: "hover:text-gray-200"
+  }, "Email Me"), "\xA0\u2022\xA0", /* @__PURE__ */ import_react.default.createElement("a", {
+    href: "https://www.instagram.com/authormadisonbailey/",
+    className: "hover:text-gray-200"
+  }, "Instagram"), "\xA0\u2022\xA0", /* @__PURE__ */ import_react.default.createElement("a", {
+    href: "https://m.facebook.com/authormadisonbailey/?__nodl&ref=m.facebook.com&_rdr",
+    className: "hover:text-gray-200"
+  }, "Facebook")), /* @__PURE__ */ import_react.default.createElement("p", null, "\xA9 ", new Date().getFullYear().toString(), " Madison Taylor"));
 }
 
 // route-module:/Users/zachtaylor/Projects/author-madison-bailey-remix/app/routes/index/blog.$id.tsx
@@ -732,7 +753,9 @@ var NewestRelease = () => {
   }, /* @__PURE__ */ React.createElement(Link5, {
     to: `books/${data.sys.id}`,
     extraMargin: true
-  }, "Read More about ", data.title))))));
+  }, "Read More about ", data.title))))), /* @__PURE__ */ React.createElement("div", {
+    className: "pt-8 pb-5"
+  }, /* @__PURE__ */ React.createElement("hr", null)));
 };
 
 // <stdin>

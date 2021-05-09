@@ -9,11 +9,12 @@ export let links: LinksFunction = () => {
 
 export default function Index() {
   return (
-    <div>
+    <div className="flex flex-col h-full">
       <NavBar />
-      <main>
+      <main className="flex-auto mb-4">
         <Outlet />
       </main>
+      <Footer className="flex-shrink" />
     </div>
   );
 }
@@ -109,5 +110,41 @@ function MenuIcon() {
         d="M4 6h16M4 12h16M4 18h16"
       />
     </svg>
+  );
+}
+
+interface FooterProps {
+  className: string;
+}
+
+function Footer({ className }: FooterProps) {
+  return (
+    <footer
+      className={`text-center py-12 px-3 bg-gray-300 text-gray-800 ${className}`}
+    >
+      <p className="mb-2">
+        <a
+          href="mailto:authormadisonbailey@gmail.com"
+          className="hover:text-gray-200"
+        >
+          Email Me
+        </a>
+        &nbsp;&bull;&nbsp;
+        <a
+          href="https://www.instagram.com/authormadisonbailey/"
+          className="hover:text-gray-200"
+        >
+          Instagram
+        </a>
+        &nbsp;&bull;&nbsp;
+        <a
+          href="https://m.facebook.com/authormadisonbailey/?__nodl&ref=m.facebook.com&_rdr"
+          className="hover:text-gray-200"
+        >
+          Facebook
+        </a>
+      </p>
+      <p>&copy; {new Date().getFullYear().toString()} Madison Taylor</p>
+    </footer>
   );
 }
